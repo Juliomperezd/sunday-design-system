@@ -1,0 +1,12 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  padding: var(--spacing-32);
+  overflow-y: auto;
+  background-color: var(--color-bg-secondary);
+}

@@ -1,0 +1,104 @@
+.page {
+  max-width: 900px;
+}
+
+.header {
+  margin-bottom: var(--spacing-40);
+}
+
+.title {
+  font-size: var(--type-heading-xl-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-heading-xl-lh);
+  letter-spacing: var(--type-heading-xl-ls);
+  color: var(--color-content-primary);
+  margin-bottom: var(--spacing-8);
+}
+
+.description {
+  font-size: var(--type-body-m-size);
+  line-height: var(--type-body-m-lh);
+  color: var(--color-content-secondary);
+}
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-24);
+}
+
+/* ── Card ── */
+.card {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-stroke-divider);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* Preview area */
+.preview {
+  background-color: var(--color-bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-48) var(--spacing-32);
+}
+
+.box {
+  width: 80px;
+  height: 80px;
+  background-color: var(--color-bg-primary);
+  border-radius: var(--radius-lg);
+}
+
+/* Info */
+.info {
+  padding: var(--spacing-20) var(--spacing-20);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.name {
+  font-size: var(--type-body-m-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-body-m-lh);
+  color: var(--color-content-primary);
+}
+
+.var {
+  font-family: var(--font-family-mono);
+  font-size: var(--type-body-xs-size);
+  color: var(--color-content-secondary);
+}
+
+/* Layers */
+.layers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  margin-top: var(--spacing-4);
+  padding-top: var(--spacing-12);
+  border-top: 1px solid var(--color-stroke-divider);
+}
+
+.layer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.layerLabel {
+  font-size: var(--type-body-xs-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-disabled);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.layerSpec {
+  font-family: var(--font-family-mono);
+  font-size: var(--type-body-xs-size);
+  color: var(--color-content-secondary);
+}

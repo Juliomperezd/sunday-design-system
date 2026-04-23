@@ -1,0 +1,109 @@
+/* ── Wrapper — contiene textBlock + action ── */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--spacing-16);
+}
+
+.withAction {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-8);
+}
+
+.left   { align-items: flex-start; }
+.center { align-items: center; }
+.right  { align-items: flex-end; }
+
+/* ── Text block — título + subtítulo ── */
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--spacing-4);
+}
+
+.hero .textBlock { gap: var(--spacing-8); }
+
+.left   .textBlock { text-align: left; }
+.center .textBlock { text-align: center; }
+.right  .textBlock { text-align: right; }
+
+/* ── Title ── */
+.base {
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-primary);
+  margin: 0;
+}
+
+.hero .base {
+  font-size: var(--type-heading-l-size);
+  line-height: var(--type-heading-l-lh);
+  letter-spacing: var(--type-heading-l-ls);
+}
+
+.h1 .base {
+  font-size: var(--type-heading-s-size);
+  line-height: var(--type-heading-s-lh);
+  letter-spacing: var(--type-heading-s-ls);
+}
+
+.h2 .base {
+  font-size: var(--type-heading-xxs-size);
+  line-height: var(--type-heading-xxs-lh);
+  letter-spacing: var(--type-heading-xxs-ls);
+}
+
+.h3 .base {
+  font-size: var(--type-body-l-size);
+  line-height: var(--type-body-l-lh);
+  letter-spacing: var(--type-body-l-ls);
+}
+
+.p1 .base {
+  font-size: var(--type-body-m-size);
+  line-height: var(--type-body-m-lh);
+  letter-spacing: var(--type-body-m-ls);
+}
+
+.category .base {
+  font-size: var(--type-body-xs-size);
+  line-height: var(--type-body-xs-lh);
+  letter-spacing: var(--type-body-xs-ls);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-secondary);
+  text-transform: uppercase;
+}
+
+/* ── Subtitle ── */
+.subtitle {
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-regular);
+  margin: 0;
+}
+
+.hero .subtitle {
+  font-size: var(--type-body-l-size);
+  line-height: var(--type-body-l-lh);
+  letter-spacing: var(--type-body-l-ls);
+  color: var(--color-content-primary);
+}
+
+.h1 .subtitle,
+.h2 .subtitle,
+.h3 .subtitle {
+  font-size: var(--type-body-m-size);
+  line-height: var(--type-body-m-lh);
+  letter-spacing: var(--type-body-m-ls);
+  color: var(--color-content-secondary);
+}
+
+.p1 .subtitle {
+  font-size: var(--type-body-s-size);
+  line-height: var(--type-body-s-lh);
+  letter-spacing: var(--type-body-s-ls);
+  color: var(--color-content-secondary);
+}

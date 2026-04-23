@@ -1,0 +1,71 @@
+.page {
+  max-width: 900px;
+}
+
+.header {
+  margin-bottom: var(--spacing-40);
+}
+
+.title {
+  font-size: var(--type-heading-xl-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-heading-xl-lh);
+  letter-spacing: var(--type-heading-xl-ls);
+  color: var(--color-content-primary);
+  margin-bottom: var(--spacing-8);
+}
+
+.description {
+  font-size: var(--type-body-m-size);
+  line-height: var(--type-body-m-lh);
+  color: var(--color-content-secondary);
+}
+
+/* ── Rows ── */
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-24);
+  padding: var(--spacing-12) var(--spacing-16);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-stroke-divider);
+}
+
+.meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-12);
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.tokenName {
+  font-family: var(--font-family-mono);
+  font-size: var(--type-body-s-size);
+  color: var(--color-content-primary);
+}
+
+.px {
+  font-size: var(--type-body-s-size);
+  color: var(--color-content-secondary);
+}
+
+.barTrack {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.bar {
+  height: 8px;
+  background-color: var(--color-content-primary);
+  border-radius: 99px;
+  min-width: 2px;
+}

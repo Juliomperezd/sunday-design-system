@@ -1,0 +1,99 @@
+.notification {
+  width: 100%;
+  max-width: 360px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: var(--spacing-12) var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  box-shadow:
+    0 1px 3px rgb(0 0 0 / 0.08),
+    0 8px 24px rgb(0 0 0 / 0.10);
+}
+
+.clickable {
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.clickable:active {
+  transform: scale(0.98);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.06),
+    0 4px 12px rgb(0 0 0 / 0.08);
+}
+
+/* ── Meta row ── */
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.iconWrap {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.iconFallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-button-primary);
+  border-radius: 4px;
+}
+
+.appName {
+  font-size: var(--type-body-xs-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-body-xs-lh);
+  letter-spacing: 0.02em;
+  color: var(--color-content-secondary);
+  text-transform: uppercase;
+}
+
+.dot {
+  font-size: var(--type-body-xs-size);
+  color: var(--color-content-secondary);
+  opacity: 0.5;
+}
+
+.time {
+  font-size: var(--type-body-xs-size);
+  line-height: var(--type-body-xs-lh);
+  color: var(--color-content-secondary);
+}
+
+/* ── Content ── */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.title {
+  font-size: var(--type-body-s-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-body-s-lh);
+  letter-spacing: var(--type-body-s-ls);
+  color: var(--color-content-primary);
+}
+
+.body {
+  font-size: var(--type-body-s-size);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--type-body-s-lh);
+  letter-spacing: var(--type-body-s-ls);
+  color: var(--color-content-secondary);
+}

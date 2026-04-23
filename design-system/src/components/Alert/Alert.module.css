@@ -1,0 +1,123 @@
+/* ── Base ── */
+.alert {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding: var(--spacing-16) var(--spacing-20);
+  border-radius: var(--radius-xl);
+  width: 100%;
+}
+
+/* ── Close button ── */
+.close {
+  position: absolute;
+  top: var(--spacing-12);
+  right: var(--spacing-16);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.125rem;
+  line-height: 1;
+  padding: var(--spacing-4);
+  border-radius: var(--radius-sm);
+  transition: opacity var(--transition-fast);
+  opacity: 0.6;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+/* ── Header row ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding-right: var(--spacing-24);
+}
+
+/* Icon container — placeholder until real icons arrive */
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  font-size: 1.25rem;
+}
+
+/* ── Typography ── */
+.title {
+  font-size: var(--type-heading-xs-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-heading-xs-lh);
+  letter-spacing: var(--type-heading-xs-ls);
+}
+
+.subtitle {
+  font-size: var(--type-body-s-size);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--type-body-s-lh);
+  letter-spacing: var(--type-body-s-ls);
+  padding-left: calc(28px + var(--spacing-12)); /* align with title */
+}
+
+/* ── Action button ── */
+.action {
+  margin-top: var(--spacing-4);
+  margin-left: calc(28px + var(--spacing-12));
+  align-self: flex-start;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  font-size: var(--type-button-m-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-button-m-lh);
+  letter-spacing: var(--type-button-m-ls);
+  padding: var(--spacing-8) var(--spacing-16);
+  border-radius: var(--radius-full);
+  transition: opacity var(--transition-fast);
+}
+
+.action:hover {
+  opacity: 0.8;
+}
+
+/* ────────────────────────────────────────
+   VARIANTS
+   Colors from semantic tokens
+──────────────────────────────────────── */
+
+/* Warning */
+.warning {
+  background-color: var(--color-bg-button-warning);
+  color: var(--color-content-warning);
+}
+.warning .close   { color: var(--color-content-warning); }
+.warning .action  { background-color: var(--color-bg-warning); color: var(--color-content-warning); }
+
+/* Error */
+.error {
+  background-color: var(--color-bg-button-error);
+  color: var(--color-content-error);
+}
+.error .close   { color: var(--color-content-error); }
+.error .action  { background-color: var(--color-bg-error); color: var(--color-content-error); }
+
+/* Info */
+.info {
+  background-color: var(--color-bg-button-info);
+  color: var(--color-content-info);
+}
+.info .close   { color: var(--color-content-info); }
+.info .action  { background-color: var(--color-bg-info); color: var(--color-content-info); }
+
+/* Success */
+.success {
+  background-color: var(--color-bg-button-success);
+  color: var(--color-content-success);
+}
+.success .close   { color: var(--color-content-success); }
+.success .action  { background-color: var(--color-bg-success); color: var(--color-content-success); }

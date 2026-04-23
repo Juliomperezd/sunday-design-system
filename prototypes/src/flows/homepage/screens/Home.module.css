@@ -1,0 +1,73 @@
+.screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  width: 100%;
+  background: var(--color-bg-primary);
+}
+
+/* ── Background — absolute, scrolls with content, sits behind everything ── */
+.background {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  display: block;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Sticky header ── */
+.screen > :first-child {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* ── Scrollable content ── */
+.content {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32);
+  padding: var(--spacing-24) var(--spacing-16);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* ── Sticky navbar ── */
+.screen > :last-child {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+/* ── Sections ── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  width: 100%;
+}
+
+/* Rings es full-bleed (375px): cancela el padding lateral del content */
+.ringSection {
+  margin: 0 calc(-1 * var(--spacing-16));
+}
+
+.shiftsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  width: 100%;
+}
+
+.insightsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  width: 100%;
+}

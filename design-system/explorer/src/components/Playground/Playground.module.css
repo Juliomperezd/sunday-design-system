@@ -1,0 +1,150 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ── Header ── */
+.header {
+  margin-bottom: var(--spacing-24);
+}
+
+.title {
+  font-size: var(--type-heading-xl-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-heading-xl-lh);
+  letter-spacing: var(--type-heading-xl-ls);
+  color: var(--color-content-primary);
+  margin-bottom: var(--spacing-8);
+}
+
+.description {
+  font-size: var(--type-body-m-size);
+  line-height: var(--type-body-m-lh);
+  color: var(--color-content-secondary);
+}
+
+/* ── Controls bar ── */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-4) var(--spacing-24);
+  padding: var(--spacing-16) var(--spacing-20);
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-stroke-divider);
+  border-bottom: none;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  cursor: pointer;
+}
+
+.controlLabel {
+  font-size: var(--type-body-xs-size);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-content-secondary);
+  white-space: nowrap;
+}
+
+/* Select */
+.select {
+  appearance: none;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-stroke-default);
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--type-body-s-size);
+  padding: var(--spacing-4) var(--spacing-24) var(--spacing-4) var(--spacing-8);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 3.5l3 3 3-3' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-8) center;
+  transition: border-color 150ms ease;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--color-stroke-focus);
+}
+
+/* Toggle */
+.toggle {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background-color: var(--color-stroke-default);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 150ms ease;
+  flex-shrink: 0;
+}
+
+.toggleOn {
+  background-color: var(--color-bg-button-primary);
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background-color: #ffffff;
+  border-radius: var(--radius-full);
+  transition: transform 150ms ease;
+  display: block;
+}
+
+.toggleOn .toggleThumb {
+  transform: translateX(16px);
+}
+
+/* Reload button */
+.reloadBtn {
+  margin-left: auto;
+  background: none;
+  border: 1px solid var(--color-stroke-default);
+  border-radius: var(--radius-md);
+  color: var(--color-content-secondary);
+  font-size: 16px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease;
+  flex-shrink: 0;
+}
+
+.reloadBtn:hover {
+  color: var(--color-content-primary);
+  border-color: var(--color-stroke-focus);
+}
+
+/* ── Canvas ── */
+.canvas {
+  flex: 1;
+  min-height: 400px;
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-stroke-divider);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-64);
+}
+
+.canvasInner {
+  display: contents;
+}

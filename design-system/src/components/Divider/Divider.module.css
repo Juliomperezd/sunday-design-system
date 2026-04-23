@@ -1,0 +1,12 @@
+.divider {
+  width: 100%;
+  background-color: var(--color-stroke-divider);
+}
+
+.simple {
+  height: 1px;
+}
+
+.large {
+  height: 8px;
+}

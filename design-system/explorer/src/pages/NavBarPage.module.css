@@ -1,0 +1,11 @@
+.phone {
+  width: 375px;
+  height: 200px;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-stroke-default);
+  overflow: hidden;
+  background-color: var(--color-bg-secondary);
+  /* transform ancla position:fixed al frame */
+  transform: translateZ(0);
+  position: relative;
+}

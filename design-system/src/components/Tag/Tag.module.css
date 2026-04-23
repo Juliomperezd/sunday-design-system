@@ -1,0 +1,48 @@
+/* ── Base ── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 24px;
+  padding: 4px 6px;
+  border-radius: var(--radius-md);
+
+  font-family: var(--font-family-base);
+  font-size: var(--type-body-s-size);
+  line-height: var(--type-body-s-lh);
+  letter-spacing: var(--type-body-s-ls);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+/* ── Variants ── */
+.default {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-content-primary);
+}
+
+.sunday {
+  background-color: var(--color-bg-sunday);
+  color: var(--color-content-primary);
+}
+
+.success {
+  background-color: var(--color-bg-success);
+  color: var(--color-content-success);
+}
+
+.error {
+  background-color: var(--color-bg-error);
+  color: var(--color-content-error);
+}
+
+.warning {
+  background-color: var(--color-bg-warning);
+  color: var(--color-content-warning);
+}
+
+.info {
+  background-color: var(--color-bg-info);
+  color: var(--color-content-info);
+}

@@ -1,0 +1,53 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 22px var(--spacing-16) var(--spacing-8);
+  background: transparent;
+  border: 1px solid var(--color-stroke-default);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-base);
+  font-size: var(--type-body-m-size);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--type-body-m-lh);
+  color: var(--color-content-primary);
+  outline: none;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.input:focus {
+  border-color: var(--color-stroke-focus);
+  background: var(--color-bg-button-secondary);
+}
+
+/* ── Floating label ── */
+.label {
+  position: absolute;
+  left: var(--spacing-16);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-family-base);
+  font-size: var(--type-body-m-size);
+  font-weight: var(--font-weight-regular);
+  line-height: 1;
+  color: var(--color-content-disabled);
+  pointer-events: none;
+  transition: top 150ms ease, transform 150ms ease, font-size 150ms ease, color 150ms ease;
+}
+
+/* Float up when focused or has value */
+.input:focus ~ .label,
+.input:not(:placeholder-shown) ~ .label {
+  top: var(--spacing-8);
+  transform: translateY(0);
+  font-size: var(--type-body-xs-size);
+  color: var(--color-content-secondary);
+}
+
+.input:focus ~ .label {
+  color: var(--color-content-primary);
+}

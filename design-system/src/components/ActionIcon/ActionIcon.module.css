@@ -1,0 +1,31 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.button:active {
+  opacity: 0.5;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}

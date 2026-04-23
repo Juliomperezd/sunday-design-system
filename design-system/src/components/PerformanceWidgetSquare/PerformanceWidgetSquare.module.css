@@ -1,0 +1,54 @@
+.widget {
+  display: flex;
+  flex-direction: column;
+  height: 160px;
+  padding: var(--spacing-12) var(--spacing-16);
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-xl);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* ── Top row: icon + label ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.label {
+  font-size: var(--type-body-xs-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-body-xs-lh);
+  letter-spacing: var(--type-body-xs-ls);
+  color: var(--color-content-secondary);
+  text-transform: uppercase;
+}
+
+/* ── 16px gap then large value ── */
+.value {
+  margin-top: var(--spacing-16);
+  font-size: var(--type-heading-m-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-heading-m-lh);
+  letter-spacing: var(--type-heading-m-ls);
+  color: var(--color-content-primary);
+}
+
+/* ── Dynamic spacer: pushes description to the bottom ── */
+.spacer {
+  flex: 1;
+}
+
+/* ── Bottom description ── */
+.description {
+  font-size: var(--type-body-xs-size);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--type-body-xs-lh);
+  letter-spacing: var(--type-body-xs-ls);
+  color: var(--color-content-primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

@@ -1,0 +1,51 @@
+.thumbnail {
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* ── Sizes ── */
+.md {
+  width: 64px;
+  height: 64px;
+}
+
+.sm {
+  width: 36px;
+  height: 36px;
+}
+
+.sm .iconWrapper {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Image variant — círculo completo + stroke inset ── */
+.image {
+  border-radius: var(--radius-full);
+  box-shadow: inset 0 0 0 1px var(--color-stroke-default);
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Icon variant — transparente, icono centrado en disabled ── */
+.icon {
+  border-radius: var(--radius-lg);
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-content-disabled);
+}

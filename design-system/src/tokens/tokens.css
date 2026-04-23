@@ -1,0 +1,269 @@
+:root {
+  /* ────────────────────────────────────────
+     RAW PALETTE
+     Used as source values for semantic tokens
+  ──────────────────────────────────────── */
+  --palette-primary-50:  #eff6ff;
+  --palette-primary-100: #dbeafe;
+  --palette-primary-200: #bfdbfe;
+  --palette-primary-300: #93c5fd;
+  --palette-primary-400: #60a5fa;
+  --palette-primary-500: #3b82f6;
+  --palette-primary-600: #2563eb;
+  --palette-primary-700: #1d4ed8;
+  --palette-primary-800: #1e40af;
+  --palette-primary-900: #1e3a8a;
+
+  --palette-neutral-0:   #ffffff;
+  --palette-neutral-50:  #f8fafc;
+  --palette-neutral-100: #f1f5f9;
+  --palette-neutral-200: #e2e8f0;
+  --palette-neutral-300: #cbd5e1;
+  --palette-neutral-400: #94a3b8;
+  --palette-neutral-500: #64748b;
+  --palette-neutral-600: #475569;
+  --palette-neutral-700: #334155;
+  --palette-neutral-800: #1e293b;
+  --palette-neutral-900: #0f172a;
+
+  --palette-success-400: #4ade80;
+  --palette-success-500: #22c55e;
+  --palette-success-600: #16a34a;
+  --palette-warning-400: #fbbf24;
+  --palette-warning-500: #f59e0b;
+  --palette-warning-600: #d97706;
+  --palette-error-400:   #f87171;
+  --palette-error-500:   #ef4444;
+  --palette-error-600:   #dc2626;
+
+  /* ────────────────────────────────────────
+     BACKGROUND
+  ──────────────────────────────────────── */
+
+  /* Surfaces */
+  --color-bg-primary:   #ffffff;
+  --color-bg-secondary: rgb(0 0 0 / 0.04);
+
+  /* Brand */
+  --color-bg-sunday: #ff17e9;
+
+  /* Feedback */
+  --color-bg-success: #adf6c0;
+  --color-bg-info:    #ebedfb;
+  --color-bg-warning: #fff4d1;
+  --color-bg-error:   #ffd1dc;
+
+  /* Action (buttons) */
+  --color-bg-button-primary:            #000000;
+  --color-bg-button-secondary:          rgb(0 0 0 / 0.08);
+  --color-bg-button-disabled:           rgb(0 0 0 / 0.30);
+  --color-bg-button-primary-reversed:   #ffffff;
+  --color-bg-button-secondary-reversed: rgb(255 255 255 / 0.30);
+  --color-bg-button-disabled-reversed:  rgb(255 255 255 / 0.30);
+  --color-bg-button-success:            rgb(14 122 50 / 0.20);
+  --color-bg-button-info:               rgb(45 52 130 / 0.20);
+  --color-bg-button-error:              rgb(209 16 35 / 0.20);
+  --color-bg-button-warning:            rgb(225 105 0 / 0.20);
+
+  /* Overlay */
+  --color-overlay-70: rgb(0 0 0 / 0.70);
+  --color-overlay-30: rgb(0 0 0 / 0.30);
+
+  /* ────────────────────────────────────────
+     CONTENT
+  ──────────────────────────────────────── */
+
+  /* Base */
+  --color-content-primary:          #000000;
+  --color-content-secondary:        rgb(0 0 0 / 0.58);
+  --color-content-disabled:         rgb(0 0 0 / 0.30);
+
+  /* Reversed (on dark backgrounds) */
+  --color-content-primary-reversed:  #ffffff;
+  --color-content-secondary-reversed: rgb(255 255 255 / 0.58);
+  --color-content-disabled-reversed: rgb(255 255 255 / 0.30);
+
+  /* Action (on buttons) */
+  --color-content-action-primary:            #000000;
+  --color-content-action-secondary:          rgb(0 0 0 / 0.58);
+  --color-content-action-disabled:           rgb(0 0 0 / 0.30);
+  --color-content-action-primary-reversed:   #000000;
+  --color-content-action-secondary-reversed: rgb(0 0 0 / 0.58);
+  --color-content-action-disabled-reversed:  rgb(0 0 0 / 0.58);
+
+  /* Feedback */
+  --color-content-success: #33B981;
+  --color-content-info:    #46A3E0;
+  --color-content-error:   #d11023;
+  --color-content-warning: #e16900;
+
+  /* Brand */
+  --color-content-sunday: #ff17e9;
+
+  /* ────────────────────────────────────────
+     STROKE
+  ──────────────────────────────────────── */
+
+  --color-stroke-focus:   #000000;
+  --color-stroke-default: rgb(0 0 0 / 0.14);
+  --color-stroke-divider: rgb(0 0 0 / 0.04);
+
+  /* Reversed */
+  --color-stroke-focus-reversed:   #ffffff;
+  --color-stroke-default-reversed: rgb(255 255 255 / 0.30);
+  --color-stroke-divider-reversed: rgb(255 255 255 / 0.14);
+
+  /* Feedback */
+  --color-stroke-error:   #d11023;
+  --color-stroke-warning: #e16900;
+
+  /* AI — gradient stroke (use with padding-box / border-box technique) */
+  --color-stroke-ai: linear-gradient(135deg, #f0968a 0%, #d46ec8 55%, #9b5fe0 100%);
+
+  /* Badge / Medal — gradients */
+  --color-badge-gold:   linear-gradient(135deg, #ffe566 0%, #f5a623 55%, #e8832a 100%);
+  --color-badge-silver: linear-gradient(135deg, #f4f4f4 0%, #c8cdd8 55%, #8e949e 100%);
+  --color-badge-bronze: linear-gradient(135deg, #f0a878 0%, #c87038 55%, #7a3a10 100%);
+
+  /* ── Font family ── */
+  --font-family-base: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-family-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* ── Font weights ── */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+
+  /* ────────────────────────────────────────
+     HEADING TOKENS
+     size / line-height / letter-spacing
+  ──────────────────────────────────────── */
+
+  /* Hero — 96px */
+  --type-heading-hero-size: 6rem;
+  --type-heading-hero-lh: 0.85;
+  --type-heading-hero-ls: -0.05em;
+
+  /* XXXL — 72px */
+  --type-heading-xxxl-size: 4.5rem;
+  --type-heading-xxxl-lh: 0.90;
+  --type-heading-xxxl-ls: -0.05em;
+
+  /* XXL — 56px */
+  --type-heading-xxl-size: 3.5rem;
+  --type-heading-xxl-lh: 0.90;
+  --type-heading-xxl-ls: -0.05em;
+
+  /* XL — 48px */
+  --type-heading-xl-size: 3rem;
+  --type-heading-xl-lh: 0.90;
+  --type-heading-xl-ls: -0.05em;
+
+  /* L — 40px */
+  --type-heading-l-size: 2.5rem;
+  --type-heading-l-lh: 1.0;
+  --type-heading-l-ls: -0.05em;
+
+  /* M — 32px */
+  --type-heading-m-size: 2rem;
+  --type-heading-m-lh: 1.0;
+  --type-heading-m-ls: -0.05em;
+
+  /* S — 28px */
+  --type-heading-s-size: 1.75rem;
+  --type-heading-s-lh: 1.1;
+  --type-heading-s-ls: -0.05em;
+
+  /* XS — 24px */
+  --type-heading-xs-size: 1.5rem;
+  --type-heading-xs-lh: 1.058;
+  --type-heading-xs-ls: -0.05em;
+
+  /* XXS — 21px */
+  --type-heading-xxs-size: 1.3125rem;
+  --type-heading-xxs-lh: 1.1;
+  --type-heading-xxs-ls: -0.05em;
+
+  /* ────────────────────────────────────────
+     BODY TOKENS
+  ──────────────────────────────────────── */
+
+  /* L — 18px */
+  --type-body-l-size: 1.125rem;
+  --type-body-l-lh: 1.111;
+  --type-body-l-ls: -0.03em;
+
+  /* M — 16px */
+  --type-body-m-size: 1rem;
+  --type-body-m-lh: 1.25;
+  --type-body-m-ls: -0.03em;
+
+  /* S — 14px */
+  --type-body-s-size: 0.875rem;
+  --type-body-s-lh: 1.286;
+  --type-body-s-ls: -0.03em;
+
+  /* XS — 12px */
+  --type-body-xs-size: 0.75rem;
+  --type-body-xs-lh: 1.167;
+  --type-body-xs-ls: -0.03em;
+
+  /* ────────────────────────────────────────
+     BUTTON TOKENS
+  ──────────────────────────────────────── */
+
+  /* M — 16px */
+  --type-button-m-size: 1rem;
+  --type-button-m-lh: 1.25;
+  --type-button-m-ls: -0.03em;
+
+  /* L — 11px */
+  --type-button-l-size: 0.6875rem;
+  --type-button-l-lh: 1.727;
+  --type-button-l-ls: -0.03em;
+
+  /* ────────────────────────────────────────
+     EMPHASIZED — 10px
+     For dense metadata, micro-labels, captions
+  ──────────────────────────────────────── */
+  --type-emphasized-size: 0.625rem;
+  --type-emphasized-lh: 1.2;
+  --type-emphasized-ls: 0.04em;
+
+  /* ── Spacing ── (number = px value) */
+  --spacing-4:   0.25rem;   /*  4px */
+  --spacing-8:   0.5rem;    /*  8px */
+  --spacing-12:  0.75rem;   /* 12px */
+  --spacing-16:  1rem;      /* 16px */
+  --spacing-20:  1.25rem;   /* 20px */
+  --spacing-24:  1.5rem;    /* 24px */
+  --spacing-32:  2rem;      /* 32px */
+  --spacing-40:  2.5rem;    /* 40px */
+  --spacing-48:  3rem;      /* 48px */
+  --spacing-56:  3.5rem;    /* 56px */
+  --spacing-64:  4rem;      /* 64px */
+  --spacing-72:  4.5rem;    /* 72px */
+  --spacing-80:  5rem;      /* 80px */
+  --spacing-88:  5.5rem;    /* 88px */
+  --spacing-96:  6rem;      /* 96px */
+  --spacing-104: 6.5rem;    /* 104px */
+  --spacing-120: 7.5rem;    /* 120px */
+
+  /* ── Border radius ── */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* ── Elevation (shadows) ── */
+  --elevation-100: 0 2px 8px 0 rgb(0 0 0 / 0.04);
+  --elevation-200: 0 4px 24px 0 rgb(0 0 0 / 0.08);
+  --elevation-300: 0 2px 8px 0 rgb(0 0 0 / 0.04), 0 12px 40px 0 rgb(0 0 0 / 0.12);
+
+  /* ── Transitions ── */
+  --transition-fast: 100ms ease;
+  --transition-base: 150ms ease;
+  --transition-slow: 300ms ease;
+}

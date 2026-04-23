@@ -1,0 +1,87 @@
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  background-color: var(--color-bg-primary);
+  border-right: 1px solid var(--color-stroke-divider);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-20) var(--spacing-16);
+  border-bottom: 1px solid var(--color-stroke-divider);
+  flex-shrink: 0;
+}
+
+.logo {
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--color-bg-button-primary);
+  color: var(--color-content-label-primary);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--type-body-xs-size);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: var(--type-body-s-size);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--type-body-s-ls);
+  color: var(--color-content-primary);
+}
+
+.section {
+  margin-top: var(--spacing-16);
+}
+
+.sectionLabel {
+  font-size: var(--type-body-xs-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-disabled);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: var(--spacing-8) var(--spacing-16) var(--spacing-4);
+}
+
+.list {
+  list-style: none;
+  padding: 0 var(--spacing-8);
+}
+
+.item {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-8) var(--spacing-12);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-base);
+  font-size: var(--type-body-s-size);
+  letter-spacing: var(--type-body-s-ls);
+  color: var(--color-content-secondary);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.item:hover {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-content-primary);
+}
+
+.item.active {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-content-primary);
+  font-weight: var(--font-weight-medium);
+}

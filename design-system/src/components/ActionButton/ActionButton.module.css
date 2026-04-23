@@ -1,0 +1,72 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity var(--transition-fast);
+  overflow: hidden;
+}
+
+.button:active {
+  opacity: 0.5;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-stroke-focus);
+  outline-offset: 2px;
+}
+
+/* ── Icon variant ── */
+.icon {
+  background: transparent;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Image variant ── */
+.image {
+  box-shadow: inset 0 0 0 1px var(--color-stroke-default);
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Sunday variant ── */
+.sunday {
+  background-color: var(--color-bg-sunday);
+}
+
+.sunday .iconWrapper {
+  color: var(--color-content-primary-reversed);
+}
+
+/* ── Initials variant ── */
+.initials {
+  background-color: var(--color-bg-info);
+}
+
+.initialsText {
+  font-size: var(--type-body-l-size);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  color: var(--color-content-primary);
+  text-transform: uppercase;
+  user-select: none;
+}

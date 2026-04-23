@@ -1,0 +1,55 @@
+.widget {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-12);
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Left: icon + label ── */
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.label {
+  font-size: var(--type-body-xs-size);
+  line-height: var(--type-body-xs-lh);
+  letter-spacing: var(--type-body-xs-ls);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-primary);
+  text-transform: uppercase;
+}
+
+/* ── Right: values + trend icon ── */
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.values {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.value {
+  font-size: var(--type-heading-xs-size);
+  line-height: var(--type-heading-xs-lh);
+  letter-spacing: var(--type-heading-xs-ls);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-primary);
+}
+
+.subValue {
+  font-size: var(--type-body-xs-size);
+  line-height: var(--type-body-xs-lh);
+  letter-spacing: var(--type-body-xs-ls);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-secondary);
+}

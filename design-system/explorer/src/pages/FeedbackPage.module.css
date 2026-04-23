@@ -1,0 +1,18 @@
+.frame {
+  width: 375px;
+  height: 280px;
+  position: relative;
+  /* Contiene position:fixed igual que NavBar */
+  transform: translateZ(0);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-stroke-default);
+  background-color: var(--color-bg-secondary);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trigger {
+  width: 240px;
+}

@@ -1,0 +1,67 @@
+/* ── Card ── */
+.wrapper {
+  width: 100%;
+  background: var(--color-bg-primary);
+  border-radius: var(--radius-xl);
+  box-sizing: border-box;
+}
+
+/* ── Arc SVG ── */
+.svg {
+  width: 100%;
+  display: block;
+}
+
+/* ── Text — pulled up into the arc opening ── */
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4);
+  margin-top: calc(-1 * var(--spacing-96));
+  padding-bottom: var(--spacing-24);
+}
+
+.label {
+  font-family: var(--font-family-base);
+  font-size: var(--type-body-m-size);
+  line-height: var(--type-body-m-lh);
+  letter-spacing: var(--type-body-m-ls);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-primary);
+}
+
+/* ── Amount ── */
+.amount {
+  display: flex;
+  align-items: baseline;
+  color: var(--color-content-primary);
+}
+
+.prefix {
+  font-family: var(--font-family-base);
+  font-size: var(--type-heading-xs-size);
+  line-height: 1;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--type-heading-xs-ls);
+  align-self: flex-end;
+  padding-bottom: 0.1em;
+}
+
+.number {
+  font-family: var(--font-family-base);
+  font-size: var(--type-heading-xxxl-size);
+  line-height: var(--type-heading-xxxl-lh);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--type-heading-xxxl-ls);
+}
+
+.cents {
+  font-family: var(--font-family-base);
+  font-size: var(--type-heading-xs-size);
+  line-height: 1;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--type-heading-xs-ls);
+  align-self: flex-end;
+  padding-bottom: 0.1em;
+}

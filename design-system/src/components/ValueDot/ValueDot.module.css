@@ -1,0 +1,62 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* ── Variant colors ── */
+.sunday {
+  color: var(--color-content-sunday);
+}
+
+.nonSunday {
+  color: var(--color-content-secondary);
+}
+
+/* ── Top row: dot + label ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: var(--type-body-xs-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-body-xs-lh);
+  letter-spacing: var(--type-body-xs-ls);
+  color: currentColor;
+}
+
+/* ── Value ── */
+.value {
+  margin-top: var(--spacing-12);
+  font-size: var(--type-heading-xs-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-heading-xs-lh);
+  letter-spacing: var(--type-heading-xs-ls);
+  color: currentColor;
+}
+
+/* ── Particles ── */
+@keyframes particleBurst {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; }
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--color-content-sunday);
+  pointer-events: none;
+  animation: particleBurst 600ms ease-out forwards;
+}

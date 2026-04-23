@@ -1,0 +1,50 @@
+.widget {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  padding: var(--spacing-12);
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Top row: icon + label / chevron ── */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.label {
+  font-size: var(--type-body-xs-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-body-xs-lh);
+  letter-spacing: var(--type-body-xs-ls);
+  color: var(--color-content-primary);
+  text-transform: uppercase;
+}
+
+/* ── Graph slot ── */
+.graphSlot {
+  width: 100%;
+}
+
+/* ── Description paragraph ── */
+.description {
+  font-size: var(--type-body-xs-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-body-xs-lh);
+  letter-spacing: var(--type-body-xs-ls);
+  color: var(--color-content-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

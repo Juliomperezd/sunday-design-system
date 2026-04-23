@@ -1,0 +1,9 @@
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-12) var(--spacing-24);
+  background: transparent;
+  width: 100%;
+  box-sizing: border-box;
+}
