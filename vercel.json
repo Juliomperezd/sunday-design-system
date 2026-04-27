@@ -1,6 +1,0 @@
-{
-  "buildCommand": "cd design-system && npm install && npm run build:explorer",
-  "outputDirectory": "design-system/dist-explorer",
-  "installCommand": "echo 'skip root install'",
-  "framework": null
-}

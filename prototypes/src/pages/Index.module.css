@@ -68,6 +68,75 @@
   color: #ffffff;
 }
 
+/* ── Design System row ── */
+.dsRow {
+  padding: 0 2.5rem;
+  padding-top: 2rem;
+}
+
+.dsLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  border: 1px solid #1a1a1a;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.dsLink:hover {
+  background-color: #060606;
+  border-color: #2a2a2a;
+}
+
+.dsInner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dsTag {
+  display: inline-block;
+  font-size: var(--type-body-xs-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-body-xs-lh);
+  letter-spacing: var(--type-body-xs-ls);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  align-self: flex-start;
+  background-color: #0e1a2e;
+  color: #4d96ff;
+  border: 1px solid #1a3055;
+}
+
+.dsName {
+  font-size: var(--type-heading-xxl-size);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--type-heading-xxl-lh);
+  letter-spacing: var(--type-heading-xxl-ls);
+  color: #ffffff;
+  transition: opacity 200ms ease;
+}
+
+.dsLink:hover .dsName {
+  opacity: 0.6;
+}
+
+.dsArrow {
+  font-size: 1.25rem;
+  color: #1f1f1f;
+  flex-shrink: 0;
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.dsLink:hover .dsArrow {
+  color: #ffffff;
+  transform: translate(3px, -3px);
+}
+
 /* ── List ── */
 .list {
   flex: 1;

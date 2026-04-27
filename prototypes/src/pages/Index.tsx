@@ -77,6 +77,22 @@ export function IndexPage() {
       </div>
 
 
+      {/* Design System link */}
+      <div className={styles.dsRow}>
+        <a
+          href="https://sunday-pi.vercel.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.dsLink}
+        >
+          <div className={styles.dsInner}>
+            <span className={styles.dsTag}>Tool</span>
+            <span className={styles.dsName}>Design System Explorer</span>
+          </div>
+          <span className={styles.dsArrow}>↗</span>
+        </a>
+      </div>
+
       {/* List */}
       <div className={styles.list}>
         {filtered.length === 0 && (
