@@ -1,0 +1,106 @@
+.strip {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: transparent;
+  padding: var(--spacing-12) var(--spacing-8);
+  gap: var(--spacing-4);
+}
+
+.strip::-webkit-scrollbar {
+  display: none;
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-8);
+  flex: 1;
+  min-width: 44px;
+  padding: var(--spacing-8) var(--spacing-4);
+  border-radius: var(--radius-xl);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.day:hover:not(.selected) {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.selected {
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.label {
+  font-family: var(--font-family-base);
+  font-size: var(--type-body-xs-size);
+  line-height: var(--type-body-xs-lh);
+  font-weight: var(--font-weight-regular);
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.01em;
+}
+
+.number {
+  font-family: var(--font-family-base);
+  font-size: var(--type-body-m-size);
+  line-height: 1;
+  font-weight: var(--font-weight-medium);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.selected .number {
+  color: #6EA0F5;
+}
+
+.indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.completed {
+  background: #D4A017;
+  border-color: #D4A017;
+}
+
+/* ── Light theme ── */
+.light {
+  background: transparent;
+  border-bottom: 1px solid var(--color-stroke-divider);
+}
+
+.light .label {
+  color: var(--color-content-secondary);
+}
+
+.light .number {
+  color: var(--color-content-primary);
+}
+
+.light .selected {
+  background: var(--color-bg-secondary);
+}
+
+.light .selected .number {
+  color: var(--color-content-primary);
+}
+
+.light .indicator {
+  border-color: var(--color-stroke-default);
+}
+
+.light .completed {
+  background: var(--color-content-success);
+  border-color: var(--color-content-success);
+}

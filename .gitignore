@@ -3,3 +3,4 @@ dist/
 dist-explorer/
 .DS_Store
 *.local
+.vercel

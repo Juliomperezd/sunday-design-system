@@ -2,14 +2,22 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-8);
-  padding: var(--spacing-8) var(--spacing-12);
+  padding: var(--spacing-8) 0;
   width: 100%;
   background: none;
+  position: relative;
+  overflow: visible;
+  box-sizing: border-box;
 }
+
+.clickable {
+  cursor: pointer;
+}
+
 
 .thumbnailSlot {
   flex-shrink: 0;
-  margin-right: var(--spacing-4); /* thumbnail→text = 8+4 = 12px */
+  margin-right: var(--spacing-4);
 }
 
 .text {
@@ -39,6 +47,33 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color 0.25s ease;
+}
+
+.titleDone {
+  color: var(--color-content-secondary);
+}
+
+/* Span wrapping the text — strikethrough grows only across the actual text */
+.titleInner {
+  display: inline;
+  position: relative;
+}
+
+.titleDone .titleInner::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1.5px;
+  background: var(--color-content-secondary);
+  width: 0;
+  animation: strikethrough 0.35s ease-out 0.05s forwards;
+}
+
+@keyframes strikethrough {
+  to { width: 100%; }
 }
 
 .subtitle {
@@ -50,4 +85,72 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* ── Checkbox ── */
+.checkbox {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-stroke-default);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 0;
+}
+
+.checkbox:hover:not(.checkboxDone) {
+  border-color: var(--color-content-success);
+}
+
+.checkboxDone {
+  background: #111111;
+  border-color: #111111;
+  transform: scale(1.15);
+  animation: checkPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes checkPop {
+  0%   { transform: scale(0.8); }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ── Done chip ── */
+.doneChip {
+  display: inline-flex;
+  align-items: center;
+  margin-top: var(--spacing-4);
+  padding: 2px var(--spacing-8);
+  background: var(--color-bg-success);
+  color: var(--color-content-success);
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-base);
+  font-size: var(--type-body-xs-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-body-xs-lh);
+  animation: fadeIn 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Confetti particles ── */
+.particle {
+  position: absolute;
+  border-radius: 2px;
+  pointer-events: none;
+  transform-origin: center;
+  animation: particleBurst 0.65s ease-out forwards;
+}
+
+@keyframes particleBurst {
+  0%   { transform: translate(-50%, -50%) translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0); opacity: 0; }
 }

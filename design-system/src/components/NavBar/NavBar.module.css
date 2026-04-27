@@ -8,6 +8,13 @@
   background-color: var(--color-bg-primary);
 }
 
+.embedded {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  right: auto;
+}
+
 .items {
   display: flex;
   align-items: stretch;

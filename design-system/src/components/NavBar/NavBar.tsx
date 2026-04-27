@@ -13,11 +13,13 @@ export interface NavBarProps {
   items: NavItem[];
   activeKey: string;
   onSelect: (key: string) => void;
+  /** Usa position:relative en vez de position:fixed — para uso dentro de prototipos */
+  embedded?: boolean;
 }
 
-export function NavBar({ items, activeKey, onSelect }: NavBarProps) {
+export function NavBar({ items, activeKey, onSelect, embedded }: NavBarProps) {
   return (
-    <nav className={styles.navbar}>
+    <nav className={[styles.navbar, embedded ? styles.embedded : ''].filter(Boolean).join(' ')}>
       <Divider variant="simple" />
       <div className={styles.items}>
         {items.map((item) => {

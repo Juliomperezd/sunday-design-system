@@ -1,0 +1,155 @@
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-primary);
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32);
+  padding: var(--spacing-24) var(--spacing-16) var(--spacing-104);
+}
+
+/* Hero total */
+.heroBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Side-by-side Sales / Tips */
+.figureRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.figureRowDivider {
+  flex-shrink: 0;
+  width: 1px;
+  height: 40px;
+  background: var(--color-stroke-divider);
+  margin-top: var(--spacing-4);
+}
+
+/* Floating button */
+.floatingBtn {
+  position: absolute;
+  bottom: var(--spacing-24);
+  left: var(--spacing-16);
+  right: var(--spacing-16);
+  box-shadow: var(--elevation-200);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ── Validate drawer ── */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  animation: overlayIn 0.2s ease forwards;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.drawer {
+  background: var(--color-bg-primary);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  display: flex;
+  flex-direction: column;
+  animation: drawerUp 0.32s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+@keyframes drawerUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.drawerHandle {
+  flex-shrink: 0;
+  width: 36px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-stroke-default);
+  margin: var(--spacing-12) auto var(--spacing-4);
+}
+
+.drawerHeaderBlock {
+  padding: var(--spacing-16) var(--spacing-16) var(--spacing-8);
+  border-bottom: 1px solid var(--color-stroke-divider);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.drawerTitle {
+  font-size: var(--type-body-m-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--type-body-m-lh);
+  color: var(--color-content-primary);
+  margin: 0;
+}
+
+.drawerSubtitle {
+  font-size: var(--type-body-s-size);
+  line-height: var(--type-body-s-lh);
+  color: var(--color-content-secondary);
+  margin: 0;
+}
+
+.drawerBody {
+  padding: var(--spacing-16);
+}
+
+.commentArea {
+  width: 100%;
+  border: 1.5px solid var(--color-stroke-default);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-12) var(--spacing-16);
+  font-size: var(--type-body-m-size);
+  font-family: var(--font-family-base);
+  line-height: var(--type-body-m-lh);
+  color: var(--color-content-primary);
+  background: transparent;
+  outline: none;
+  resize: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.commentArea:focus {
+  border-color: var(--color-stroke-focus);
+}
+
+.commentArea::placeholder {
+  color: var(--color-content-secondary);
+}
+
+.drawerFooter {
+  padding: var(--spacing-8) var(--spacing-16) var(--spacing-24);
+}

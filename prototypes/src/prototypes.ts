@@ -90,4 +90,18 @@ export const PROTOTYPES: PrototypeEntry[] = [
     prdUrl: '',
     info: '',
   },
+  {
+    key: 'end-of-service',
+    name: 'End of service',
+    description: 'Resumen de turno al final del servicio: tips, sunday usage y métricas clave.',
+    path: '/end-of-service',
+    screens: 2,
+    quarter: 'Q2·2026',
+    status: 'Discovery',
+    market: ['Francia', 'US'],
+    for: ['Servers'],
+    notionUrl: '',
+    prdUrl: '',
+    info: '',
+  },
 ];

@@ -89,6 +89,9 @@ export type { ShiftProps } from './components/Shift';
 export { ShiftPill } from './components/ShiftPill';
 export type { ShiftPillProps } from './components/ShiftPill';
 
+export { DatePickerStrip } from './components/DatePickerStrip';
+export type { DatePickerStripProps, DayItem } from './components/DatePickerStrip';
+
 // Tokens
 export {
   palette, colors, fontFamily, fontWeight,
