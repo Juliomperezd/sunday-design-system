@@ -21,15 +21,15 @@ export interface HistoryRound {
 }
 
 export const INITIAL_TEAMMATES: Teammate[] = [
-  { id: 1, name: 'Marcus Lambert', initials: 'ML', emoji: '😎', color: '#E84393', betters: ['Hélène', 'Felix', 'Ana', 'Carlos'],              baseValue: 17.2, finalValue: 21.4, currentValue: 17.2 },
-  { id: 2, name: 'Sarah Kim',      initials: 'SK', emoji: '🌟', color: '#00CEC9', betters: ['Tom', 'Nina', 'Lucas'],                           baseValue: 16.8, finalValue: 18.9, currentValue: 16.8 },
-  { id: 3, name: 'Jake Turner',    initials: 'JT', emoji: '🔥', color: '#FDCB6E', betters: ['Camille', 'Felix', 'Antoine', 'Sophie', 'Romain', 'Maya'], baseValue: 18.1, finalValue: 26.3, currentValue: 18.1 },
-  { id: 4, name: 'Priya Verma',    initials: 'PV', emoji: '💫', color: '#A29BFE', betters: ['Lucas', 'Iris'],                                  baseValue: 15.5, finalValue: 19.7, currentValue: 15.5 },
-  { id: 5, name: 'Tom Rousseau',   initials: 'TR', emoji: '😄', color: '#6C5CE7', betters: ['Ana', 'Hélène', 'Romain', 'Zara', 'Kai'],         baseValue: 16.0, finalValue: 22.8, currentValue: 16.0 },
-  { id: 6, name: 'Yuki Nakano',    initials: 'YN', emoji: '✨', color: '#FD79A8', betters: ['Sophie', 'Camille', 'Felix'],                     baseValue: 14.9, finalValue: 17.6, currentValue: 14.9 },
-  { id: 7, name: 'Leo García',     initials: 'LG', emoji: '🎯', color: '#00B894', betters: ['Kai', 'Zara', 'Antoine'],                         baseValue: 15.1, finalValue: 20.5, currentValue: 15.1 },
-  { id: 8, name: 'Mia Blanc',      initials: 'MB', emoji: '💪', color: '#E17055', betters: ['Nina', 'Carlos', 'Iris', 'Maya'],                  baseValue: 16.3, finalValue: 23.1, currentValue: 16.3 },
-  { id: 9, name: 'Alex Renard',    initials: 'AR', emoji: '🌊', color: '#0984E3', betters: ['Hélène', 'Lucas'],                                baseValue: 14.2, finalValue: 16.9, currentValue: 14.2 },
+  { id: 1, name: 'Marcus Lambert', initials: 'ML', emoji: '😎', color: '#E84393', betters: ['Hélène', 'Felix', 'Ana', 'Carlos'],              baseValue: 27.2, finalValue: 31.4, currentValue: 27.2 },
+  { id: 2, name: 'Sarah Kim',      initials: 'SK', emoji: '🌟', color: '#00CEC9', betters: ['Tom', 'Nina', 'Lucas'],                           baseValue: 26.8, finalValue: 28.9, currentValue: 26.8 },
+  { id: 3, name: 'Jake Turner',    initials: 'JT', emoji: '🔥', color: '#FDCB6E', betters: ['Camille', 'Felix', 'Antoine', 'Sophie', 'Romain', 'Maya'], baseValue: 28.1, finalValue: 36.3, currentValue: 28.1 },
+  { id: 4, name: 'Priya Verma',    initials: 'PV', emoji: '💫', color: '#A29BFE', betters: ['Lucas', 'Iris'],                                  baseValue: 25.5, finalValue: 29.7, currentValue: 25.5 },
+  { id: 5, name: 'Tom Rousseau',   initials: 'TR', emoji: '😄', color: '#6C5CE7', betters: ['Ana', 'Hélène', 'Romain', 'Zara', 'Kai'],         baseValue: 26.0, finalValue: 32.8, currentValue: 26.0 },
+  { id: 6, name: 'Yuki Nakano',    initials: 'YN', emoji: '✨', color: '#FD79A8', betters: ['Sophie', 'Camille', 'Felix'],                     baseValue: 24.9, finalValue: 27.6, currentValue: 24.9 },
+  { id: 7, name: 'Leo García',     initials: 'LG', emoji: '🎯', color: '#00B894', betters: ['Kai', 'Zara', 'Antoine'],                         baseValue: 25.1, finalValue: 30.5, currentValue: 25.1 },
+  { id: 8, name: 'Mia Blanc',      initials: 'MB', emoji: '💪', color: '#E17055', betters: ['Nina', 'Carlos', 'Iris', 'Maya'],                  baseValue: 26.3, finalValue: 33.1, currentValue: 26.3 },
+  { id: 9, name: 'Alex Renard',    initials: 'AR', emoji: '🌊', color: '#0984E3', betters: ['Hélène', 'Lucas'],                                baseValue: 24.2, finalValue: 26.9, currentValue: 24.2 },
 ];
 
 export const WINNER_ID = 3;

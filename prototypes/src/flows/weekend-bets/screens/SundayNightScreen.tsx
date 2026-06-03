@@ -36,7 +36,7 @@ export function SundayNightScreen() {
             appIcon={<AppIcon size={32} />}
             time="now"
             title="🏆 You were right! Take your $5 reward"
-            body={`${winner.name} got the highest tip — ${winner.finalValue.toFixed(0)}% ($52.00)`}
+            body={`${winner.name} got the highest tip — ${winner.finalValue.toFixed(0)}% ($68.00)`}
             onClick={jumpToSunday}
           />
         </div>

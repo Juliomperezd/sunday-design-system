@@ -44,6 +44,39 @@ export function LiveScreen() {
           <p className={styles.pollMeta}>Saturday · 7:14 PM · 23 bets placed</p>
         </div>
 
+        {/* Podium — top 3 */}
+        {sorted.length >= 3 && (() => {
+          const CARD = {
+            1: { bg: 'linear-gradient(150deg, #F9EDB5 0%, #EDCC6A 100%)', numColor: 'rgba(120,80,0,0.08)',   text: '#1A1400' },
+            2: { bg: 'linear-gradient(150deg, #DDE5EF 0%, #BFCEE0 100%)', numColor: 'rgba(30,60,110,0.07)',  text: '#0F1828' },
+            3: { bg: 'linear-gradient(150deg, #F5DCC0 0%, #DEBB98 100%)', numColor: 'rgba(120,50,10,0.07)',  text: '#201200' },
+          };
+          // Visual order: 2nd left · 1st center · 3rd right
+          const order = [sorted[1], sorted[0], sorted[2]];
+          const ranks = [2, 1, 3] as const;
+          return (
+            <div className={styles.podium}>
+              {order.map((t, i) => {
+                const rank = ranks[i];
+                const c = CARD[rank];
+                const isUserBet = t.id === userBet;
+                return (
+                  <div
+                    key={t.id}
+                    className={[styles.podiumCard, rank === 1 ? styles.podiumFirst : ''].join(' ')}
+                    style={{ background: c.bg }}
+                  >
+                    <div className={styles.podiumBgNum} style={{ color: c.numColor }}>{rank}</div>
+                    {isUserBet && <div className={styles.podiumPickBadge}>Your pick</div>}
+                    <p className={styles.podiumName} style={{ color: c.text }}>{t.name.split(' ')[0]}</p>
+                    <p className={styles.podiumPct} style={{ color: c.text }}>{t.currentValue.toFixed(1)}%</p>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })()}
+
         {/* Table header */}
         <div className={styles.tableHeader}>
           <span className={styles.thRank}>Rank</span>
@@ -51,9 +84,9 @@ export function LiveScreen() {
           <span className={styles.thTip}>Tip</span>
         </div>
 
-        {/* Standings */}
+        {/* Standings — 4th and below */}
         <div className={styles.standings}>
-          {sorted.map((t, idx) => {
+          {sorted.slice(3).map((t, idx) => {
             const isUserBet = t.id === userBet;
             const visibleBetters = t.betters.slice(0, 3);
             const extraBetters = t.betters.length > 3 ? t.betters.length - 3 : 0;
@@ -62,7 +95,7 @@ export function LiveScreen() {
               <div key={t.id}>
                 {idx > 0 && <Divider variant="simple" />}
                 <div className={[styles.row, isUserBet ? styles.rowHighlight : ''].join(' ')}>
-                  <span className={styles.rank}>#{idx + 1}</span>
+                  <span className={styles.rank}>#{idx + 4}</span>
 
                   <div className={styles.rowMain}>
                     <div className={styles.rowNameRow}>
