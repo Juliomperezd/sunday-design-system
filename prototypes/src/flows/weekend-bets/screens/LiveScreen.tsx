@@ -24,7 +24,7 @@ export function LiveScreen() {
       <div className={styles.headerWrap}>
         <Header
           variant="main"
-          leftButton={{ label: 'Weekend Bets', icon: <Icon name="chevron-down" size={16} /> }}
+          leftButton={{ label: 'Reset demo', onClick: reset }}
           sundayAction={{ icon: <Icon name="lightning-01" size={20} /> }}
           initialsAction={{ initials: 'JL' }}
         />
@@ -88,7 +88,7 @@ export function LiveScreen() {
                       className={styles.barFill}
                       style={{
                         width: `${barWidth}%`,
-                        background: isUserBet ? '#FDCB6E' : t.color,
+                        background: isUserBet ? '#1a1a2e' : t.color,
                         transition: isSimulating ? 'width 0.08s linear' : 'width 0.4s ease',
                       }}
                     />
@@ -144,9 +144,6 @@ export function LiveScreen() {
             Jump to Sunday 🌙
           </Button>
         )}
-        <Button variant="secondary" size="small" onClick={reset}>
-          Reset demo
-        </Button>
       </div>
     </div>
   );

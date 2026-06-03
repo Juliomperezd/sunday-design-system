@@ -2,11 +2,12 @@ export interface Teammate {
   id: number;
   name: string;
   initials: string;
+  emoji: string;
   color: string;
-  baseValue: number;   // tip % at start of weekend
-  finalValue: number;  // tip % at end of weekend
+  betters: string[];
+  baseValue: number;
+  finalValue: number;
   currentValue: number;
-  betCount: number;    // fake # of others who bet on them
 }
 
 export interface HistoryRound {
@@ -20,39 +21,30 @@ export interface HistoryRound {
 }
 
 export const INITIAL_TEAMMATES: Teammate[] = [
-  { id: 1, name: 'Marcus',  initials: 'ML', color: '#E84393', baseValue: 17.2, finalValue: 21.4, currentValue: 17.2, betCount: 4 },
-  { id: 2, name: 'Sarah',   initials: 'SK', color: '#00CEC9', baseValue: 16.8, finalValue: 18.9, currentValue: 16.8, betCount: 3 },
-  { id: 3, name: 'Jake',    initials: 'JT', color: '#FDCB6E', baseValue: 18.1, finalValue: 26.3, currentValue: 18.1, betCount: 6 },
-  { id: 4, name: 'Priya',   initials: 'PV', color: '#A29BFE', baseValue: 15.5, finalValue: 19.7, currentValue: 15.5, betCount: 2 },
-  { id: 5, name: 'Tom',     initials: 'TR', color: '#6C5CE7', baseValue: 16.0, finalValue: 22.8, currentValue: 16.0, betCount: 5 },
-  { id: 6, name: 'Yuki',    initials: 'YN', color: '#FD79A8', baseValue: 14.9, finalValue: 17.6, currentValue: 14.9, betCount: 3 },
+  { id: 1, name: 'Marcus',  initials: 'ML', emoji: '😎', color: '#E84393', betters: ['Hélène', 'Felix', 'Ana', 'Carlos'],              baseValue: 17.2, finalValue: 21.4, currentValue: 17.2 },
+  { id: 2, name: 'Sarah',   initials: 'SK', emoji: '🌟', color: '#00CEC9', betters: ['Tom', 'Nina', 'Lucas'],                           baseValue: 16.8, finalValue: 18.9, currentValue: 16.8 },
+  { id: 3, name: 'Jake',    initials: 'JT', emoji: '🔥', color: '#FDCB6E', betters: ['Camille', 'Felix', 'Antoine', 'Sophie', 'Romain', 'Maya'], baseValue: 18.1, finalValue: 26.3, currentValue: 18.1 },
+  { id: 4, name: 'Priya',   initials: 'PV', emoji: '💫', color: '#A29BFE', betters: ['Lucas', 'Iris'],                                  baseValue: 15.5, finalValue: 19.7, currentValue: 15.5 },
+  { id: 5, name: 'Tom',     initials: 'TR', emoji: '😄', color: '#6C5CE7', betters: ['Ana', 'Hélène', 'Romain', 'Zara', 'Kai'],         baseValue: 16.0, finalValue: 22.8, currentValue: 16.0 },
+  { id: 6, name: 'Yuki',    initials: 'YN', emoji: '✨', color: '#FD79A8', betters: ['Sophie', 'Camille', 'Felix'],                     baseValue: 14.9, finalValue: 17.6, currentValue: 14.9 },
 ];
 
-export const WINNER_ID = 3; // Jake always wins
+export const WINNER_ID = 3;
 
 export const POLL_QUESTION = "Who'll pull the highest tip % this weekend?";
 export const POLL_EMOJI = '💰';
 
 export const HISTORY: HistoryRound[] = [
-  {
-    id: 1,
-    weekLabel: 'May 19 – 25',
-    poll: 'Most 5-star Google reviews',
-    winnerName: 'Sarah',
-    winnerValue: '3 reviews',
-    userPickName: 'Sarah',
-    userWon: true,
-  },
-  {
-    id: 2,
-    weekLabel: 'May 12 – 18',
-    poll: 'Most tables turned',
-    winnerName: 'Marcus',
-    winnerValue: '47 tables',
-    userPickName: 'Tom',
-    userWon: false,
-  },
+  { id: 1, weekLabel: 'May 19 – 25', poll: 'Most 5-star Google reviews', winnerName: 'Sarah',  winnerValue: '3 reviews',  userPickName: 'Sarah', userWon: true  },
+  { id: 2, weekLabel: 'May 12 – 18', poll: 'Most tables turned',          winnerName: 'Marcus', winnerValue: '47 tables', userPickName: 'Tom',   userWon: false },
 ];
+
+export function formatBetters(betters: string[]): string {
+  if (betters.length === 0) return 'No bets yet';
+  if (betters.length === 1) return `${betters[0]} placed a bet`;
+  if (betters.length === 2) return `${betters[0]} and ${betters[1]} placed their bets`;
+  return `${betters[0]}, ${betters[1]} and ${betters.length - 2} more placed their bets`;
+}
 
 export function easeOut(t: number) {
   return 1 - Math.pow(1 - t, 3);

@@ -1,6 +1,4 @@
 import { useState, useRef, useCallback } from 'react';
-import { NavBar } from '@mi-org/design-system';
-import type { NavItem } from '@mi-org/design-system';
 import { MobileShell } from '../../components/MobileShell/MobileShell';
 import { PROTOTYPES } from '../../prototypes';
 import { BetsContext } from './WeekendBetsContext';
@@ -9,16 +7,9 @@ import { INITIAL_TEAMMATES, WINNER_ID, easeOut, lerp } from './data';
 import type { Teammate } from './data';
 import { LockScreen } from './screens/LockScreen';
 import { LiveScreen } from './screens/LiveScreen';
-import { HistoryScreen } from './screens/HistoryScreen';
 import styles from './WeekendBets.module.css';
 
 const proto = PROTOTYPES.find((p) => p.key === 'weekend-bets')!;
-
-const NAV_ITEMS: NavItem[] = [
-  { key: 'bet',     label: 'Bet',     activeIconName: 'star-01',        defaultIconName: 'star-01-1'   },
-  { key: 'live',    label: 'Live',    activeIconName: 'lightning-01-1', defaultIconName: 'lightning-01' },
-  { key: 'history', label: 'History', activeIconName: 'coins-02',       defaultIconName: 'coins-02-1'  },
-];
 
 const SIM_DURATION = 4200;
 const SIM_INTERVAL = 80;
@@ -65,32 +56,24 @@ export function WeekendBetsFlow() {
         return { ...t, currentValue: lerp(base, t.finalValue, eased) + jitter };
       }));
 
-      // Show hot callout when Jake crosses 25%
-      if (progress > 0.7 && !hotCallout) {
-        const jakeVal = lerp(
-          INITIAL_TEAMMATES.find(t => t.id === WINNER_ID)!.baseValue,
-          INITIAL_TEAMMATES.find(t => t.id === WINNER_ID)!.finalValue,
-          eased
-        );
-        if (jakeVal >= 24.5) {
-          setHotCallout('🔥 26% tip — that\'s real, and it happened here.');
-        }
+      const winner = INITIAL_TEAMMATES.find(t => t.id === WINNER_ID)!;
+      const jakeVal = lerp(winner.baseValue, winner.finalValue, eased);
+      if (progress > 0.7 && jakeVal >= 24.5 && !hotCallout) {
+        setHotCallout("🔥 26% tip — that's real, and it happened here.");
       }
 
       if (progress >= 1) {
         clearInterval(simRef.current!);
         setIsSimulating(false);
         setHasSimulated(true);
-        // Snap to exact final values
         setTeammates(INITIAL_TEAMMATES.map(t => ({ ...t, currentValue: t.finalValue })));
-        setHotCallout('🔥 26% tip — that\'s real, and it happened here.');
+        setHotCallout("🔥 26% tip — that's real, and it happened here.");
       }
     }, SIM_INTERVAL);
   }, [isSimulating, hasSimulated, hotCallout]);
 
   const jumpToSunday = useCallback(() => {
     setPhase('result');
-    setActiveTab('live');
   }, []);
 
   const reset = useCallback(() => {
@@ -116,19 +99,8 @@ export function WeekendBetsFlow() {
     <BetsContext.Provider value={ctx}>
       <MobileShell prototype={proto} resetPath="/weekend-bets">
         <div className={styles.shell}>
-          <div className={styles.content}>
-            {activeTab === 'bet'     && <LockScreen />}
-            {activeTab === 'live'    && <LiveScreen />}
-            {activeTab === 'history' && <HistoryScreen />}
-          </div>
-          <div className={styles.nav}>
-            <NavBar
-              items={NAV_ITEMS}
-              activeKey={activeTab}
-              onSelect={(key) => setActiveTab(key as Tab)}
-              embedded
-            />
-          </div>
+          {activeTab === 'bet'  && <LockScreen />}
+          {activeTab === 'live' && <LiveScreen />}
         </div>
       </MobileShell>
     </BetsContext.Provider>

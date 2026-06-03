@@ -232,8 +232,8 @@
 }
 
 .teamCardSelected {
-  border-color: #FDCB6E;
-  background: color-mix(in srgb, #FDCB6E 8%, var(--color-bg-secondary));
+  border-color: #1a1a2e;
+  background: color-mix(in srgb, #1a1a2e 8%, var(--color-bg-secondary));
 }
 
 .avatar {
@@ -282,9 +282,9 @@
 }
 
 .pickActive {
-  background: #FDCB6E;
-  border-color: #FDCB6E;
-  color: #1a1a2e;
+  background: #1a1a2e;
+  border-color: #1a1a2e;
+  color: #ffffff;
   font-weight: 700;
 }
 

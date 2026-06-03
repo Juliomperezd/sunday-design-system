@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Button } from '@mi-org/design-system';
-import { OSTopBar } from '../../../../../design-system/src/prototype-components/OSTopBar/OSTopBar';
 import { AppIcon } from '../../../../../design-system/src/prototype-components/AppIcon/AppIcon';
 import { Icon } from '../../../../../design-system/src/prototype-components/Icon/Icon';
 import { useBets } from '../WeekendBetsContext';
-import { POLL_QUESTION, POLL_EMOJI, INITIAL_TEAMMATES } from '../data';
+import { POLL_QUESTION, POLL_EMOJI, INITIAL_TEAMMATES, formatBetters } from '../data';
 import styles from './LockScreen.module.css';
 
 const CONFETTI_COLORS = ['#FDCB6E','#FF7675','#A29BFE','#55EFC4','#FD79A8','#74B9FF','#6C5CE7','#00CEC9'];
@@ -55,7 +54,7 @@ export function LockScreen() {
           <p className={styles.betPlacedTitle}>Bet placed!</p>
           <p className={styles.betPlacedSub}>You picked</p>
           <div className={styles.betPlacedAvatar} style={{ background: pick.color }}>
-            {pick.initials}
+            {pick.emoji}
           </div>
           <p className={styles.betPlacedName}>{pick.name}</p>
           <p className={styles.betPlacedNote}>Results drop Sunday night 🌙</p>
@@ -66,8 +65,6 @@ export function LockScreen() {
 
   return (
     <div className={styles.screen}>
-      <OSTopBar color="#ffffff" />
-
       {/* Lock screen wallpaper */}
       <div className={styles.wallpaper}>
         <div className={styles.timeBlock}>
@@ -123,11 +120,11 @@ export function LockScreen() {
                     disabled={confirming}
                   >
                     <div className={styles.avatar} style={{ background: t.color }}>
-                      {t.initials}
+                      {t.emoji}
                     </div>
                     <div className={styles.teamInfo}>
                       <p className={styles.teamName}>{t.name}</p>
-                      <p className={styles.teamOdds}>{t.betCount} bets placed</p>
+                      <p className={styles.teamOdds}>{formatBetters(t.betters)}</p>
                     </div>
                     <div className={[styles.pick, isSelected ? styles.pickActive : ''].join(' ')}>
                       {isSelected ? '✓' : ''}

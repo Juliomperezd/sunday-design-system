@@ -115,13 +115,13 @@
 }
 
 .rowHighlight {
-  border-color: color-mix(in srgb, #FDCB6E 60%, transparent);
-  background: color-mix(in srgb, #FDCB6E 5%, var(--color-bg-secondary));
+  border-color: color-mix(in srgb, #1a1a2e 60%, transparent);
+  background: color-mix(in srgb, #1a1a2e 5%, var(--color-bg-secondary));
 }
 
 .rowLeader {
-  border-color: color-mix(in srgb, #FDCB6E 80%, transparent);
-  background: color-mix(in srgb, #FDCB6E 8%, var(--color-bg-secondary));
+  border-color: color-mix(in srgb, #1a1a2e 80%, transparent);
+  background: color-mix(in srgb, #1a1a2e 8%, var(--color-bg-secondary));
 }
 
 .rank {
@@ -171,8 +171,8 @@
 .yourPick {
   font-size: 10px;
   font-weight: var(--font-weight-medium);
-  color: #FDCB6E;
-  background: color-mix(in srgb, #FDCB6E 15%, transparent);
+  color: #1a1a2e;
+  background: color-mix(in srgb, #1a1a2e 15%, transparent);
   border-radius: 100px;
   padding: 2px 7px;
   font-family: var(--font-family-base);
@@ -217,7 +217,7 @@
 }
 
 .pctLeader {
-  color: #FDCB6E;
+  color: #1a1a2e;
 }
 
 .pctLabel {

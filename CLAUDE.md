@@ -347,6 +347,7 @@ src/
     ├── onboarding/       # Prototipo: Splash → Login → Home
     ├── homepage/         # Prototipo: Homepage
     ├── end-of-service/   # Prototipo: End of service (flujo completo)
+    ├── weekend-bets/     # Prototipo: Weekend Bets — social betting game para servidores
     └── microgoals/       # Prototipo: Microgoals — quests y recompensas para camareros
 ```
 
@@ -376,6 +377,45 @@ Ejemplo: `prototypes/public/assets/microgoals/mascot.png` → accesible como `/a
   - SectionHeader hero "$1.000 / Total" + dos h2 "$800/Sales" y "$200/Tips"
   - Botón flotante "Validate the figures" → abre drawer con formulario de comentario + "Confirm" (navega back)
 - `LeaveCommentScreen` — pantalla interior de comentario
+
+**`weekend-bets/`** — Social betting game (Servers):
+Juego de apuestas ligero: cada viernes los camareros apuestan a cuál compañero ganará una categoría playful durante el fin de semana (ej. "highest tip %", "most 5-star reviews"). Resultados el domingo por la noche + notificación push si ganan $5.
+
+- `data.ts` — 6 teammates con emoji, nombre, color, lista de betters (ej. "Hélène, Felix and 3 more placed their bets")
+- `WeekendBetsContext.ts` — contexto React: `phase` (friday|live|result), `activeTab` (bet|live), `userBet`, `isSimulating`, `hasSimulated`, funciones reset/placeBet/startSimulation/jumpToSunday
+- `index.tsx` — provider del contexto + MobileShell, solo dos tabs visibles (lock y live)
+- `screens/LockScreen.tsx` — Lock screen (viernes 9:41):
+  - Fondo gradiente púrpura oscuro sin OSTopBar
+  - Notificación del app icon "🎰 Weekend Bets are LIVE" (tappable para drawer)
+  - Bet Drawer: emoji 💰 + título "Weekend Bets" + "Results drop Sunday night" + pregunta "Who'll pull the highest tip % this weekend?"
+  - 6 tarjetas de teammate: emoji (no initials), nombre, "X bets placed" o formatBetters() (ej. "Hélène, Felix and 3 more")
+  - Selección en negro (#1a1a2e), no amarillo — circle pick negro con checkmark blanco
+  - Confetti burst (28 pcs) cuando tapean "Place Bet"
+  - Estado "Bet placed!" post-confirmación
+- `screens/LiveScreen.tsx` — Standings en vivo (Polymarket-style):
+  - Header main con leftButton "Reset demo" (sin icono), no navbar
+  - LIVE badge pulsante rojo + poll question + "Saturday · 7:14 PM · 23 bets placed"
+  - Hot callout: "🔥 26% tip — that's real, and it happened here." (aparece cuando el leader sube)
+  - Standings: rank (#1-6 o 🏆), avatar emoji + name, barras animadas (color team o negro si es tu pick)
+  - "Your pick" badge negro (no amarillo), "Leading" badge verde
+  - Botón "▶ Simulate weekend" (4.2s animation, 80ms ticks, easeOut lerp)
+  - Botón "Jump to Sunday 🌙" después de simular
+  - Value moment card verde: "Jake hit 26.3% tip — that's real money happening at your table. Sunday makes it visible."
+- `screens/ResultOverlay.tsx` — Resultado (domingo noche):
+  - Push notification (app icon del AppIcon) desliza desde arriba con delay 600ms
+  - Si ganaste: "🏆 You called it! +$5 incoming" + fondo gradiente púrpura + winner card + value moment card amarillo + 320 particles confetti
+  - Si perdiste: "😅 So close! You picked [name] · [winner] won it" + fondo dark + winner card + "New bets drop every Friday"
+  - Botón "Replay demo" (no está en live screen, solo aquí o en header)
+
+**Patterns aprendidos en Weekend Bets:**
+- **Lock screen sin OSTopBar**: inset 0, flex column, gradiente custom, no elementos del DS a excepción de Button
+- **Bet drawer**: overlay semi-transparente + drawer blur + handle + emoji headers + formatBetters() para listas dinámicas
+- **Selección en negro**: bordes/background/checkmark en #1a1a2e, no amarillo — mantiene contraste con fondo primario
+- **Polymarket-style standings**: barras animadas con lerp, inline style con background dinámico (team color o negro si userBet), rowHighlight/rowLeader borders en negro
+- **Hot callout**: background amarillo-transparente, border amarillo-transparente, aparece con slideDown en medio de simulación
+- **Push notification**: AppIcon component en el slot appIcon, notificación real iOS-style sin OSTopBar (eso es solo para lock screen)
+- **Resultado con confetti**: 320 partículas en 3 zonas, fall animation con cubic-bezier, partículas rectangulares + circulares
+- **Result overlay**: mostrar PushNotification dentro del mismo overlay, push desliza con delay + opacity/transform
 
 **`microgoals/`** — Quests y micro-objetivos para camareros (Servers):
 - `MicrogoalsContext.ts` — contexto React con `completed: Set<number>`, `markComplete(id)`, `resetAll()`
@@ -558,5 +598,7 @@ Section (gap 16px)
 - [ ] Rellenar `notionUrl`, `prdUrl` e `info` en cada prototipo de `prototypes.ts`
 - [ ] Construir los flujos restantes: Email invitation, Manager's challenges, Server's challenges, Send rewards to your bank
 - [ ] End-of-service V1 y V2 (actualmente solo V0 — The Green Olive)
+- [ ] Weekend Bets: agregar History tab (actualmente solo Lock + Live + Result)
+- [ ] Weekend Bets: múltiples polls/rondas y navegación entre ellas
 - [ ] Microgoals: definir contenido real de la pantalla interior "Get your first guest checking their bill" (actualmente placeholder)
 - [ ] Microgoals: añadir más quests interactivas (actualmente solo Quest 1 y Quiz tienen pantalla interior)
