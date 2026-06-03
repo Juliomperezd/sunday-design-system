@@ -70,10 +70,10 @@
 /* Crop 5px top and bottom of the mascot image */
 .mascotImg {
   width: 100%;
-  height: calc(100% + 10px);
-  margin-top: -5px;
+  height: 100%;
   object-fit: cover;
   object-position: center;
+  clip-path: inset(5px 0 5px 0);
 }
 
 .progressText {

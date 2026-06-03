@@ -52,7 +52,7 @@ export function GuestCheckingScreen() {
       </div>
 
       <div className={styles.bottom}>
-        <Button variant="primary" size="large" onClick={handleCTA}>
+        <Button variant="primary" size="large">
           How to present the QR to Guests
         </Button>
       </div>
