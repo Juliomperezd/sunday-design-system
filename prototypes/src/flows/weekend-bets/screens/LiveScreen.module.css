@@ -7,19 +7,16 @@
   overflow: hidden;
 }
 
-.bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
 
 .headerWrap {
   flex-shrink: 0;
   position: relative;
   z-index: 1;
+}
+
+/* Hide the pink gradient image in the Header */
+.headerWrap :global(img[aria-hidden="true"]) {
+  display: none;
 }
 
 .scroll {
@@ -94,34 +91,60 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ── Table header ── */
+
+.tableHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-8) var(--spacing-16) var(--spacing-4);
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-content-secondary);
+  font-family: var(--font-family-base);
+}
+
+.thRank {
+  width: 28px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.thServer {
+  flex: 1;
+}
+
+.thTip {
+  text-align: right;
+  min-width: 48px;
+  flex-shrink: 0;
+}
+
 /* ── Standings ── */
 
 .standings {
   padding: 0 var(--spacing-16);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-8);
 }
 
 .row {
   display: flex;
   align-items: center;
   gap: var(--spacing-12);
-  padding: var(--spacing-12) var(--spacing-16);
-  background: var(--color-bg-secondary);
-  border: 1.5px solid transparent;
-  border-radius: 16px;
-  transition: border-color 0.3s ease;
+  padding: var(--spacing-12) 0;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.row:last-child {
+  border-bottom: none;
 }
 
 .rowHighlight {
-  border-color: color-mix(in srgb, #1a1a2e 60%, transparent);
-  background: color-mix(in srgb, #1a1a2e 5%, var(--color-bg-secondary));
-}
-
-.rowLeader {
-  border-color: color-mix(in srgb, #1a1a2e 80%, transparent);
-  background: color-mix(in srgb, #1a1a2e 8%, var(--color-bg-secondary));
+  /* no special background, keep clean */
 }
 
 .rank {
@@ -200,30 +223,60 @@
   border-radius: 2px;
 }
 
+/* ── Betters avatars ── */
+
+.bettersAvatars {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: var(--spacing-8);
+}
+
+.betterAvatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-left: -6px;
+  position: relative;
+  flex-shrink: 0;
+  font-family: var(--font-family-base);
+}
+
+.bettersAvatars .betterAvatar:first-child {
+  margin-left: 0;
+}
+
+.betterAvatarMore {
+  background: var(--color-bg-secondary);
+  color: var(--color-content-secondary);
+  font-size: 8px;
+  font-weight: 600;
+}
+
+/* ── Row value ── */
+
 .rowValue {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   flex-shrink: 0;
+  min-width: 48px;
+  justify-content: flex-end;
 }
 
 .pct {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: var(--font-weight-medium);
   color: var(--color-content-primary);
   font-family: var(--font-family-base);
   line-height: 1.1;
   letter-spacing: -0.02em;
-}
-
-.pctLeader {
-  color: #1a1a2e;
-}
-
-.pctLabel {
-  font-size: 10px;
-  color: var(--color-content-secondary);
-  font-family: var(--font-family-base);
 }
 
 /* ── Value moment ── */

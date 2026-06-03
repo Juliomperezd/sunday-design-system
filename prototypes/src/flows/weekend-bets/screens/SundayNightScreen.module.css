@@ -1,0 +1,63 @@
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: #080612;
+  overflow: hidden;
+}
+
+.topBar {
+  flex-shrink: 0;
+}
+
+.wallpaper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-32) var(--spacing-16) var(--spacing-24);
+  gap: var(--spacing-48);
+}
+
+.timeBlock {
+  text-align: center;
+  color: #ffffff;
+}
+
+.time {
+  font-size: 72px;
+  font-weight: 200;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-family: var(--font-family-base);
+}
+
+.date {
+  font-size: var(--type-body-m-size);
+  opacity: 0.6;
+  margin-top: var(--spacing-4);
+  font-family: var(--font-family-base);
+}
+
+/* Push notification slides in from top */
+.notifWrap {
+  width: 100%;
+  transform: translateY(-120px);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
+}
+
+.notifVisible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.cta {
+  flex-shrink: 0;
+  padding: var(--spacing-12) var(--spacing-16) var(--spacing-16);
+}
+
+.cta > * {
+  width: 100%;
+}

@@ -1,26 +1,28 @@
-import { Header, Button, SectionHeader } from '@mi-org/design-system';
-import { Background } from '../../../../../design-system/src/prototype-components/Background/Background';
+import { Header, Button, SectionHeader, Divider } from '@mi-org/design-system';
 import { Icon } from '../../../../../design-system/src/prototype-components/Icon/Icon';
 import { useBets } from '../WeekendBetsContext';
-import { POLL_QUESTION, WINNER_ID } from '../data';
+import { POLL_QUESTION } from '../data';
 import { ResultOverlay } from './ResultOverlay';
+import { SundayNightScreen } from './SundayNightScreen';
 import styles from './LiveScreen.module.css';
 
+const AVATAR_COLORS = ['#E84393','#00CEC9','#FDCB6E','#A29BFE','#6C5CE7','#FD79A8','#00B894','#E17055','#0984E3'];
+function nameToColor(name: string): string {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % AVATAR_COLORS.length;
+  return AVATAR_COLORS[h];
+}
+
 export function LiveScreen() {
-  const { phase, teammates, userBet, isSimulating, hasSimulated, hotCallout, startSimulation, jumpToSunday, reset } = useBets();
+  const { phase, teammates, userBet, startSimulation, reset } = useBets();
 
   const sorted = [...teammates].sort((a, b) => b.currentValue - a.currentValue);
-  const maxVal = Math.max(...teammates.map(t => t.currentValue));
-  const leader = sorted[0];
 
-  if (phase === 'result') {
-    return <ResultOverlay />;
-  }
+  if (phase === 'result')     return <ResultOverlay />;
+  if (phase === 'simulating') return <SundayNightScreen />;
 
   return (
     <div className={styles.screen}>
-      <Background className={styles.bg} width="100%" height={280} />
-
       <div className={styles.headerWrap}>
         <Header
           variant="main"
@@ -42,108 +44,69 @@ export function LiveScreen() {
           <p className={styles.pollMeta}>Saturday · 7:14 PM · 23 bets placed</p>
         </div>
 
-        {/* Hot callout */}
-        {hotCallout && (
-          <div className={styles.hotCallout}>
-            <span>{hotCallout}</span>
-          </div>
-        )}
+        {/* Table header */}
+        <div className={styles.tableHeader}>
+          <span className={styles.thRank}>Rank</span>
+          <span className={styles.thServer}>Server</span>
+          <span className={styles.thTip}>Tip</span>
+        </div>
 
         {/* Standings */}
         <div className={styles.standings}>
           {sorted.map((t, idx) => {
             const isUserBet = t.id === userBet;
-            const isLeader = idx === 0 && hasSimulated;
-            const barWidth = maxVal > 0 ? (t.currentValue / maxVal) * 100 : 0;
+            const visibleBetters = t.betters.slice(0, 3);
+            const extraBetters = t.betters.length > 3 ? t.betters.length - 3 : 0;
 
             return (
-              <div
-                key={t.id}
-                className={[
-                  styles.row,
-                  isUserBet ? styles.rowHighlight : '',
-                  isLeader ? styles.rowLeader : '',
-                ].join(' ')}
-              >
-                <span className={styles.rank}>
-                  {isLeader ? '🏆' : `#${idx + 1}`}
-                </span>
+              <div key={t.id}>
+                {idx > 0 && <Divider variant="simple" />}
+                <div className={[styles.row, isUserBet ? styles.rowHighlight : ''].join(' ')}>
+                  <span className={styles.rank}>#{idx + 1}</span>
 
-                <div className={styles.rowAvatar} style={{ background: t.color }}>
-                  {t.initials}
-                </div>
+                  <div className={styles.rowMain}>
+                    <div className={styles.rowNameRow}>
+                      <span className={styles.rowName}>{t.name}</span>
+                      {isUserBet && <span className={styles.yourPick}>Your pick</span>}
+                    </div>
+                  </div>
 
-                <div className={styles.rowMain}>
-                  <div className={styles.rowNameRow}>
-                    <span className={styles.rowName}>{t.name}</span>
-                    {isUserBet && (
-                      <span className={styles.yourPick}>Your pick</span>
-                    )}
-                    {isLeader && (
-                      <span className={styles.leadingBadge}>Leading</span>
+                  {/* Betters avatars */}
+                  <div className={styles.bettersAvatars}>
+                    {visibleBetters.map((name, i) => (
+                      <div
+                        key={i}
+                        className={styles.betterAvatar}
+                        style={{ background: nameToColor(name), zIndex: visibleBetters.length - i }}
+                        title={name}
+                      >
+                        {name[0].toUpperCase()}
+                      </div>
+                    ))}
+                    {extraBetters > 0 && (
+                      <div className={[styles.betterAvatar, styles.betterAvatarMore].join(' ')}
+                        style={{ zIndex: 0 }}>
+                        +{extraBetters}
+                      </div>
                     )}
                   </div>
-                  <div className={styles.barTrack}>
-                    <div
-                      className={styles.barFill}
-                      style={{
-                        width: `${barWidth}%`,
-                        background: isUserBet ? '#1a1a2e' : t.color,
-                        transition: isSimulating ? 'width 0.08s linear' : 'width 0.4s ease',
-                      }}
-                    />
-                  </div>
-                </div>
 
-                <div className={styles.rowValue}>
-                  <span className={[styles.pct, isLeader ? styles.pctLeader : ''].join(' ')}>
-                    {t.currentValue.toFixed(1)}%
-                  </span>
-                  <span className={styles.pctLabel}>tip</span>
+                  <div className={styles.rowValue}>
+                    <span className={styles.pct}>{t.currentValue.toFixed(1)}%</span>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Value moment callout for winner */}
-        {hasSimulated && (
-          <div className={styles.valueMoment}>
-            <div className={styles.valueMomentAvatar} style={{ background: teammates.find(t => t.id === WINNER_ID)!.color }}>
-              {teammates.find(t => t.id === WINNER_ID)!.initials}
-            </div>
-            <div>
-              <p className={styles.valueMomentTitle}>
-                {teammates.find(t => t.id === WINNER_ID)!.name} hit{' '}
-                <strong>{teammates.find(t => t.id === WINNER_ID)!.finalValue.toFixed(1)}% tip</strong>
-              </p>
-              <p className={styles.valueMomentSub}>
-                That's real money happening at your table. Sunday makes it visible.
-              </p>
-            </div>
-          </div>
-        )}
-
         <div style={{ height: 20 }} />
       </div>
 
-      {/* Bottom actions */}
       <div className={styles.actions}>
-        {!hasSimulated && (
-          <Button
-            variant={isSimulating ? 'secondary' : 'primary'}
-            size="large"
-            onClick={startSimulation}
-            disabled={isSimulating}
-          >
-            {isSimulating ? '⏳ Simulating weekend…' : '▶ Simulate weekend'}
-          </Button>
-        )}
-        {hasSimulated && (
-          <Button variant="primary" size="large" onClick={jumpToSunday}>
-            Jump to Sunday 🌙
-          </Button>
-        )}
+        <Button variant="primary" size="large" onClick={startSimulation}>
+          ▶ Simulate weekend
+        </Button>
       </div>
     </div>
   );

@@ -7,23 +7,15 @@
   z-index: 5;
 }
 
-/* ── Push notification ── */
-
-.notifWrap {
-  padding: var(--spacing-8) var(--spacing-16);
-  opacity: 0;
-  transform: translateY(-12px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-  z-index: 10;
-  flex-shrink: 0;
+.overlayWin {
+  background: linear-gradient(160deg, #1a1035 0%, #2d1b69 50%, #1a1035 100%);
 }
 
-.notifIn {
-  opacity: 1;
-  transform: translateY(0);
+.overlayLose {
+  background: #0d0d12;
 }
 
-/* ── Win background ── */
+/* ── Main content ── */
 
 .main {
   flex: 1;
@@ -34,14 +26,6 @@
   padding: var(--spacing-24) var(--spacing-20);
   text-align: center;
   gap: var(--spacing-16);
-}
-
-.mainWin {
-  background: linear-gradient(160deg, #1a1035 0%, #2d1b69 50%, #1a1035 100%);
-}
-
-.mainLose {
-  background: var(--color-bg-primary);
 }
 
 .bigEmoji {
@@ -59,9 +43,8 @@
 
 .sub {
   font-size: var(--type-body-m-size);
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.55);
   font-family: var(--font-family-base);
-  margin-top: -var(--spacing-8);
 }
 
 /* ── Winner card ── */
@@ -69,10 +52,11 @@
 .winCard {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--spacing-12);
   padding: var(--spacing-16);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   width: 100%;
   text-align: left;
@@ -85,11 +69,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  font-weight: var(--font-weight-medium);
-  color: #1a1a2e;
+  font-size: 22px;
   flex-shrink: 0;
-  font-family: var(--font-family-base);
 }
 
 .winName {
@@ -101,45 +82,123 @@
 
 .winStat {
   font-size: var(--type-body-xs-size);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.5);
   margin-top: 3px;
   font-family: var(--font-family-base);
 }
 
-.winAmount {
-  margin-left: auto;
-  font-size: 22px;
+.winStats {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.winTip {
+  font-size: var(--type-body-m-size);
   font-weight: var(--font-weight-medium);
-  color: #FDCB6E;
+  color: #ffffff;
   font-family: var(--font-family-base);
+}
+
+.winSubtip {
+  font-size: var(--type-body-xs-size);
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 2px;
+  font-family: var(--font-family-base);
+}
+
+/* ── Social proof ── */
+
+.socialProof {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-8);
+  width: 100%;
+  text-align: center;
+}
+
+.socialAvatars {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.socialAvatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-left: -6px;
+  position: relative;
+  flex-shrink: 0;
+  font-family: var(--font-family-base);
+}
+
+.socialAvatars .socialAvatar:first-child {
+  margin-left: 0;
+}
+
+.socialText {
+  font-size: var(--type-body-s-size);
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-family-base);
+  line-height: var(--type-body-s-lh);
 }
 
 /* ── Value moment ── */
 
 .valueMoment {
   padding: var(--spacing-12) var(--spacing-16);
-  background: color-mix(in srgb, #FDCB6E 10%, transparent);
-  border: 1px solid color-mix(in srgb, #FDCB6E 30%, transparent);
+  background: rgba(253, 203, 110, 0.08);
+  border: 1px solid rgba(253, 203, 110, 0.2);
   border-radius: 14px;
   width: 100%;
   font-size: var(--type-body-s-size);
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.75);
   font-family: var(--font-family-base);
   line-height: var(--type-body-s-lh);
+  text-align: left;
 }
 
 .consolation {
-  padding: var(--spacing-12) var(--spacing-16);
-  background: var(--color-bg-secondary);
-  border-radius: 14px;
   width: 100%;
   font-size: var(--type-body-s-size);
-  color: var(--color-content-secondary);
+  color: rgba(255, 255, 255, 0.45);
   font-family: var(--font-family-base);
+  text-align: center;
 }
 
-.resetBtn {
-  margin-top: var(--spacing-8);
+.bottomBtns {
+  flex-shrink: 0;
+  padding: var(--spacing-12) var(--spacing-20) var(--spacing-24);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+.seeResultsBtn {
+  width: 100%;
+}
+
+/* White button for See results */
+.seeResultsBtn button {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border-color: #ffffff !important;
+}
+
+/* White text for Replay demo on dark background */
+.bottomBtns > button {
+  color: rgba(255, 255, 255, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background: transparent !important;
 }
 
 /* ── Confetti ── */

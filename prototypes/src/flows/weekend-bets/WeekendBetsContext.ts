@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 import type { Teammate } from './data';
 
-export type Phase = 'friday' | 'live' | 'result';
+export type Phase = 'friday' | 'live' | 'simulating' | 'result';
 export type Tab = 'bet' | 'live' | 'history';
 
 export interface BetsContextType {

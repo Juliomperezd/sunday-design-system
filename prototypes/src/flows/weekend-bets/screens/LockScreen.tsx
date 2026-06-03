@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Button } from '@mi-org/design-system';
 import { AppIcon } from '../../../../../design-system/src/prototype-components/AppIcon/AppIcon';
-import { Icon } from '../../../../../design-system/src/prototype-components/Icon/Icon';
 import { useBets } from '../WeekendBetsContext';
-import { POLL_QUESTION, POLL_EMOJI, INITIAL_TEAMMATES, formatBetters } from '../data';
+import { POLL_QUESTION, INITIAL_TEAMMATES } from '../data';
+import { LiveScreen } from './LiveScreen';
 import styles from './LockScreen.module.css';
 
 const CONFETTI_COLORS = ['#FDCB6E','#FF7675','#A29BFE','#55EFC4','#FD79A8','#74B9FF','#6C5CE7','#00CEC9'];
@@ -12,7 +12,7 @@ interface Particle { id: number; x: number; y: number; tx: number; ty: number; c
 let pid = 0;
 
 export function LockScreen() {
-  const { userBet, phase, showBetDrawer, openBetDrawer, closeBetDrawer, placeBet } = useBets();
+  const { phase, showBetDrawer, openBetDrawer, closeBetDrawer, placeBet } = useBets();
   const [selected, setSelected] = useState<number | null>(null);
   const [confirming, setConfirming] = useState(false);
   const [particles, setParticles] = useState<Particle[]>([]);
@@ -43,91 +43,56 @@ export function LockScreen() {
     }, 900);
   }
 
-  // Already placed a bet — show confirmation state
-  if (userBet !== null && phase !== 'friday') {
-    const pick = INITIAL_TEAMMATES.find(t => t.id === userBet)!;
-    return (
-      <div className={styles.betPlaced}>
-        <OSTopBar />
-        <div className={styles.betPlacedContent}>
-          <div className={styles.betPlacedCheck}>✓</div>
-          <p className={styles.betPlacedTitle}>Bet placed!</p>
-          <p className={styles.betPlacedSub}>You picked</p>
-          <div className={styles.betPlacedAvatar} style={{ background: pick.color }}>
-            {pick.emoji}
-          </div>
-          <p className={styles.betPlacedName}>{pick.name}</p>
-          <p className={styles.betPlacedNote}>Results drop Sunday night 🌙</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.screen}>
-      {/* Lock screen wallpaper */}
-      <div className={styles.wallpaper}>
-        <div className={styles.timeBlock}>
-          <p className={styles.time}>9:41</p>
-          <p className={styles.date}>Friday, June 6</p>
+      {/* Wallpaper — hidden when drawer opens, revealing LiveScreen behind */}
+      {!showBetDrawer && phase === 'friday' && (
+        <div className={styles.wallpaper}>
+          <button className={styles.appIconBtn} onClick={openBetDrawer}>
+            <AppIcon size={96} badge={1} />
+          </button>
         </div>
+      )}
 
-        {/* Sunday notification — tap to open drawer */}
-        <button className={styles.notification} onClick={openBetDrawer}>
-          <div className={styles.notifIcon}>
-            <AppIcon size={32} />
-          </div>
-          <div className={styles.notifBody}>
-            <div className={styles.notifMeta}>
-              <span className={styles.notifApp}>SUNDAY</span>
-              <span className={styles.notifTime}>now</span>
-            </div>
-            <p className={styles.notifTitle}>🎰 Weekend Bets are LIVE</p>
-            <p className={styles.notifSub}>Who'll own this weekend? Place your bet →</p>
-          </div>
-        </button>
-
-        <p className={styles.hint}>tap to bet</p>
-      </div>
-
-      {/* Bet Drawer — slides up */}
+      {/* Bet Drawer — LiveScreen visible behind, drawer slides up */}
       {showBetDrawer && (
         <div className={styles.drawerOverlay}>
+          <div className={styles.livePreview}><LiveScreen /></div>
+          <div className={styles.drawerScrim} />
           <div className={styles.drawer}>
             <div className={styles.drawerHandle} />
 
-            <div className={styles.drawerHeader}>
-              <span className={styles.drawerEmoji}>{POLL_EMOJI}</span>
-              <div>
-                <p className={styles.drawerTitle}>Weekend Bets</p>
-                <p className={styles.drawerSub}>Results drop Sunday night 🌙</p>
-              </div>
-              <button className={styles.closeBtn} onClick={closeBetDrawer}>
-                <Icon name="chevron-down" size={20} color="var(--color-content-secondary)" />
-              </button>
+            <div className={styles.drawerPoll}>
+              <span className={styles.drawerCoin}>🪙</span>
+              <p className={styles.drawerQuestion}>{POLL_QUESTION}</p>
+              <p className={styles.drawerSub}>Results drop Sunday night 🌙</p>
             </div>
-
-            <p className={styles.pollQuestion}>{POLL_QUESTION}</p>
 
             <div className={styles.teamList}>
               {INITIAL_TEAMMATES.map(t => {
                 const isSelected = selected === t.id;
+                const names = t.betters.slice(0, 2).join(', ');
+                const extra = t.betters.length > 2 ? t.betters.length - 2 : 0;
                 return (
                   <button
                     key={t.id}
-                    className={[styles.teamCard, isSelected ? styles.teamCardSelected : ''].join(' ')}
+                    className={[
+                      styles.teamCard,
+                      isSelected ? styles.teamCardSelected : (selected !== null ? styles.teamCardDimmed : ''),
+                    ].join(' ')}
                     onClick={() => setSelected(isSelected ? null : t.id)}
                     disabled={confirming}
                   >
-                    <div className={styles.avatar} style={{ background: t.color }}>
-                      {t.emoji}
-                    </div>
                     <div className={styles.teamInfo}>
                       <p className={styles.teamName}>{t.name}</p>
-                      <p className={styles.teamOdds}>{formatBetters(t.betters)}</p>
+                      <p className={styles.teamOdds}>
+                        <span className={styles.bettersNames}>{names}</span>
+                        {extra > 0 && <span className={styles.bettersCount}> +{extra}</span>}
+                        <span className={styles.bettersLabel}> placed their bet</span>
+                      </p>
                     </div>
-                    <div className={[styles.pick, isSelected ? styles.pickActive : ''].join(' ')}>
-                      {isSelected ? '✓' : ''}
+                    <div className={[styles.selector, isSelected ? styles.selectorActive : ''].join(' ')}>
+                      {isSelected && '✓'}
                     </div>
                   </button>
                 );
@@ -145,7 +110,6 @@ export function LockScreen() {
               </Button>
             </div>
 
-            {/* Confetti */}
             {particles.map(p => (
               <span key={p.id} className={styles.particle} style={{
                 left: p.x, top: p.y,
