@@ -21,6 +21,20 @@ export interface PrototypeEntry {
 // Añade aquí cada nuevo prototipo para que aparezca en el índice
 export const PROTOTYPES: PrototypeEntry[] = [
   {
+    key: 'microgoals',
+    name: 'Microgoals',
+    description: 'Quests y micro-objetivos para incentivar el aprendizaje y adopción de Sunday por parte de los camareros.',
+    path: '/microgoals',
+    screens: 3,
+    quarter: 'Q2·2026',
+    status: 'Discovery',
+    market: ['Francia', 'US'],
+    for: ['Servers'],
+    notionUrl: '',
+    prdUrl: '',
+    info: '',
+  },
+  {
     key: 'email-invitation',
     name: 'Email invitation',
     description: 'Flujo de invitación por email para nuevos usuarios.',

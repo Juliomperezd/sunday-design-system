@@ -1,0 +1,113 @@
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-primary);
+  overflow: hidden;
+  animation: slideInRight 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Full-bleed hero ── */
+
+.heroImage {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  flex-shrink: 0;
+}
+
+.heroImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* Status bar + back button overlaid on photo */
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.heroOverlay > * {
+  pointer-events: auto;
+}
+
+.backBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: var(--spacing-8) var(--spacing-16);
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+.backBtn:active {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* ── Content ── */
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.scroll::-webkit-scrollbar { display: none; }
+
+.content {
+  padding: var(--spacing-24) var(--spacing-16) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+/* ── Reward pill ── */
+
+.rewardPill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  align-self: flex-start;
+  background: color-mix(in srgb, var(--color-content-sunday) 12%, transparent);
+  border-radius: 100px;
+  padding: 6px 12px;
+}
+
+.rewardLabel,
+.rewardAmount {
+  font-size: var(--type-body-s-size);
+  line-height: 1;
+  color: var(--color-content-sunday);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-base);
+}
+
+/* ── Bottom CTA ── */
+
+.bottom {
+  flex-shrink: 0;
+  padding: var(--spacing-12) var(--spacing-16) var(--spacing-24);
+}
+
+.bottom > * {
+  width: 100%;
+}
