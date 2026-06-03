@@ -10,6 +10,33 @@ sunday/
 
 ---
 
+## Despliegue (Vercel)
+
+Dos proyectos independientes en el mismo repo de GitHub. Cada push despliega ambos automáticamente.
+
+| Proyecto | URL | Qué sirve |
+|---|---|---|
+| `sunday` | https://sunday-pi.vercel.app | Design System Explorer |
+| `sunday-prototypes` | https://sunday-prototypes.vercel.app | App de prototipos |
+
+**Build config:**
+- Explorer: `buildCommand: cd design-system && npm install && npm run build:explorer` / `outputDirectory: design-system/dist-explorer` / `rootDirectory: null` (repo root)
+- Prototypes: `buildCommand: npm install && npx vite build` / `outputDirectory: dist` / `rootDirectory: "prototypes"`
+
+El Explorer sigue sin `vercel.json`. El proyecto Prototypes tiene `rootDirectory: "prototypes"`, lo que hace que `prototypes/vercel.json` aplique **solo** a ese proyecto. Ese archivo contiene el rewrite SPA (`/* → /index.html`) necesario para React Router.
+
+El build de prototipos NO necesita compilar el design-system previamente — Vite resuelve los imports directamente desde el source via aliases en `prototypes/vite.config.ts`.
+
+Para gestionar los proyectos Vercel desde CLI:
+```bash
+# Cambiar proyecto activo (editar .vercel/project.json)
+# Explorer: projectId prj_ZLjGOIyew6k2htTRpUgzdK3y9yNO
+# Prototypes: projectId prj_iDMeyVARBpPxvAlnPG7pDKy53zAN
+# orgId: team_bMMRzIwPl2RfRJ7mPKhHsqBC
+```
+
+---
+
 ## design-system/
 
 **Package:** `@mi-org/design-system`
@@ -53,6 +80,7 @@ design-system/
 │   │   ├── Cell/
 │   │   ├── ActionButton/
 │   │   ├── Header/
+│   │   ├── DatePickerStrip/
 │   │   ├── PerformanceWidgetHorizontal/
 │   │   ├── PerformanceWidgetVertical/
 │   │   ├── Donut/
@@ -142,154 +170,89 @@ Es un gradiente CSS, no un color plano — no se puede usar directamente en `bor
 
 ### Componentes de producción
 
-**Button** — `variant`: primary | secondary | ghost · `size`: sm | md | lg · `loading` · `fullWidth` · forwarded ref
+**Button** — `variant`: primary | secondary | ghost · `size`: large | small · `icon` (leading ReactNode) · `loading` · forwarded ref
 
 **Alert** — `variant`: warning | error | info | success · `title` (required) · `subtitle` · `icon` (ReactNode, slot) · `action: { label, onClick }` · `onClose`
 
 **ActionSheet** — modal bottom sheet con lista de acciones
 
-**Divider** — separador horizontal, `variant`: default | subtle
+**Divider** — separador horizontal, `variant`: simple | large
 
 **Tag** — `variant`: default | success | error | warning | info
 
-**SegmentedControl** — tabs horizontales con estado activo
+**SegmentedControl** — tabs horizontales con estado activo · `options: [string, string] | [string, string, string] | [string, string, string, string]` · `value` · `onChange` — pasar siempre con `as [string, string]` para evitar error de inferencia TS
 
-**SectionHeader** — `level`: hero | h1 | h2 | h3 | p1 | category · `align`: left | center · `action: { label, onClick }`
+**SectionHeader** — `level`: hero | h1 | h2 | h3 | p1 | category · `align`: left | center · `subtitle?` · `thumbnail?: ThumbnailProps` · `action?: { label, variant, onClick }`
 - `category`: body-xs medium uppercase, `--color-content-secondary` — para títulos de sección tipo etiqueta (12px emphasized). Siempre en mayúsculas vía `text-transform: uppercase`.
+- `thumbnail` se renderiza encima del texto (útil para estados validados con icono check)
+- `action` con `withAction` pone el botón en la misma fila (flex row) — para botón debajo del texto, renderizarlo aparte
 
-**Thumbnail** — imagen cuadrada con `variant`: sm | md | lg
+**Thumbnail** — `variant`: image | icon · `size`: sm | md
 
-**NavBar** — barra de navegación inferior · `items: NavItem[]` · `activeKey` · `onSelect`
+**NavBar** — `items: NavItem[]` · `activeKey` · `onSelect` · `embedded?: boolean`
+- `embedded={true}`: cambia `position: fixed` a `position: relative` — **obligatorio** dentro de prototipos con MobileShell para que quede dentro del teléfono y no escape al viewport del navegador
 
 **Feedback** — pantalla de feedback completa · `action: { label, onClick }`
 
 **Image** — imagen con aspect ratio fijo
 
-**Cell** — fila de lista con icono + texto + acción
+**Cell** — fila de lista interactiva:
+- `title` · `subtitle?` · `thumbnail?` · `trailingTitle?` · `trailingSubtitle?` · `chevron?` · `checkable?` · `onClick?` · `onCheck?`
+- `checkable`: añade checkbox circular a la izquierda. Al marcar: strikethrough animado de izquierda a derecha (sólo sobre el texto, no toda la celda) + explosión de 160 partículas de confetti repartidas por toda la celda
+- `onCheck`: callback llamado una vez cuando el checkbox pasa de desmarcado a marcado (para lifting state al padre)
+- `onClick`: navega o abre algo — se dispara al clickar el cuerpo de la celda (no el checkbox)
+- Sin padding horizontal (0) — el padding lateral lo gestiona el contenedor padre
+- Partículas: 40% desde el checkbox (velocidad alta), 60% esparcidas por el ancho de la celda (splatter)
 
 **ActionButton** — botón circular con icono + label debajo
 
 **Header** — cabecera de pantalla con dos variantes:
-- `variant="inner"`: OSTopBar encima + fila con botón izquierda, título centrado, acciones derecha (grid `48px 1fr auto`)
-- `variant="main"`: OSTopBar encima + fila con saludo izquierda y acciones derecha, imagen de fondo `mainBg`
-- En ambas variantes, OSTopBar se integra automáticamente en la parte superior con `color` `--color-content-primary`
+- `variant="inner"`: OSTopBar encima + `title` centrado + `onBack` (chevron izquierda) + `rightActions?: HeaderAction[]`
+- `variant="main"`: OSTopBar encima + `leftButton: { label, icon, onClick? }` + `sundayAction` + `initialsAction`
+- Para ocultar el gradiente rosa del Header main solo en un prototipo concreto (sin tocar el DS): usar CSS override `:global(img[aria-hidden="true"]) { display: none }` en el módulo CSS de la pantalla
 
-**PerformanceWidgetHorizontal** — widget métrica horizontal:
-- Izquierda: `Icon` (variant default, 20px) + `label` (body-xs medium uppercase)
-- Derecha: `value` (heading-xs) + `subValue` (body-xs) + `trendIconName` (Icon active)
-- Fondo `--color-bg-secondary`, `border-radius: --radius-xl`
+**DatePickerStrip** — selector de días horizontal (componente de producción, exportado desde index.ts):
+- Props: `days: DayItem[]` · `selectedIndex?` · `onSelect?` · `theme?: 'dark' | 'light'`
+- `DayItem`: `{ label: string, number: number, completed: boolean }`
+- `theme="light"`: fondo transparente, días completados con check verde, seleccionado con número destacado, divider inferior
+- `theme="dark"`: fondo transparente, días completados con check azul/dorado
 
-**PerformanceWidgetVertical** — widget métrica vertical:
-- Fila superior: `Icon` (default, 20px) + `label` (body-xs medium uppercase) + chevron derecha
-- `graph?: ReactNode` — slot opcional para gráficas (InlineWidget + InlineGraph); tiene `margin: --spacing-8 0`
-- `description` — párrafo body-xs secondary, clamped a 3 líneas
+**PerformanceWidgetHorizontal** — widget métrica horizontal
 
-**Donut** — gráfica de arco SVG animada:
-- Arco de 300° que arranca a las 7 en punto (rotación 120°)
-- `value` + `maxValue` determinan el fill; `label` (body-xs secondary) + `unit` (body-xs secondary) debajo del número grande
-- Animación al montar: fill del arco con easeOut + contador numérico estilo tragaperras (1200ms)
-- Ancho fijo 375px, padding `--spacing-32 --spacing-40`; span fantasma invisible bajo el número para centrado correcto
+**PerformanceWidgetVertical** — widget métrica vertical con slot `graph?: ReactNode`
 
-**InlineWidget** — wrapper slot neutro para gráficas dentro de widgets (fondo `--color-bg-secondary`, `border-radius: --radius-xl`, padding `--spacing-12`). `overflow: visible` crítico para que el pulse ring no se recorte.
+**Donut** — gráfica de arco SVG animada (300°, arranca a las 7)
 
-**InlineGraph** — componente público que envuelve BarEvolution o LineChart según `type`:
-- `type: 'bar'` → BarEvolution · `type: 'line'` → LineChart
-- Props comunes: `data`, `comparisonData?`, `color?`
-- Bar extra: `unit?` · Line: sin extras
-- `comparisonData` muestra una segunda serie en `--color-content-secondary` (barras) / `--color-content-disabled` (línea)
+**InlineWidget** — wrapper slot neutro para gráficas (`overflow: visible` crítico)
 
-**BarEvolution** — gráfica de barras de 7 días (implementación interna de InlineGraph):
-- Props: `data: BarDay[]` · `comparisonData?: BarDay[]` · `barColor` · `unit`
-- `BarDay`: `{ day, date, value?, isToday? }`
-- Barras animadas con `barGrowShake` (con shake) para sunday, `barGrow` (sin shake) para comparison
-- Partículas en el tip durante el crecimiento + explosión de confetti multicolor al acabar
-- Valor flotante (`position: absolute; bottom: calc(100% + 2px)`) sobre la barra sunday
-- Columna seleccionada: fondo `--color-bg-secondary`; sin selección por defecto
+**InlineGraph** — envuelve BarEvolution (`type='bar'`) o LineChart (`type='line'`)
 
-**LineChart** — gráfica de línea de 7 días (implementación interna de InlineGraph):
-- Props: `data: LineChartDay[]` · `comparisonData?: LineChartDay[]` · `color?`
-- `LineChartDay`: `{ day, date?, value }`
-- `CHART_HEIGHT = 110px`, animación por `stroke-dashoffset` con easing easeInOutQuad (1600ms)
-- Shake durante el dibujo aplicado solo al `<g>` de la línea (no al SVG entero — dividers no vibran)
-- Partículas de color en el punto activo durante la animación
-- Escala Y compartida entre línea principal y comparativa
-- Comparativa se anima en el mismo RAF loop, sin shake ni partículas, en `--color-content-disabled`
-- Después de la animación: dot sólido + ring fijo (stroke primary-reversed, 4px) + pulse ring animado (sunday)
-- Sin selección por defecto; click en columna activa fondo `--color-bg-button-secondary` + tooltip
+**Rings** — tres anillos concéntricos animados
 
-**Rings** — tres anillos concéntricos animados con métricas a los lados:
-- Geometría: `R_OUTER=85`, `R_MIDDLE=74`, `R_INNER=63`, `STROKE=7`, `GAP=4`, `SIZE=184px`
-- Colores: externo `--color-content-sunday` · medio `--color-content-success` · interno `--color-content-info`
-- Props `RingMetric`: `value?` (0–100), `displayValue?`, `prefix?`, `suffix?`, `label?: React.ReactNode`, `icon?`
-- `label` acepta `React.ReactNode` — permite estructuras multi-nivel con iconos (ej. Google icon + "5★" / "reviews")
-- Animación al montar: arcos + contadores numéricos con easeOut (1200ms)
-- Layout: stat izquierda (outer/sunday) | SVG central | stats derecha (middle + inner apilados)
+**Tips** — arco semicircular animado con propinas
 
-**Tips** — arco semicircular animado con cantidad de propinas:
-- Semicírculo (mitad superior) SVG: `R=130`, `STROKE=14`, `SVG_W=300`
-- El arco se llena con `--color-content-sunday` al montar, animado con easeOut (1200ms)
-- Props: `label?` (default `'Your tips'`) · `value?` (entero animado) · `percentage?` (0–100, fill del arco) · `prefix?` (default `'$'`) · `cents?` (default `'.00'`)
-- Tipografía: label en body-m (16px medium) · amount en `--type-heading-xxxl` (~72px) con prefix/cents en heading-xs alineados al baseline
-- Fondo `--color-bg-primary` (blanco) · texto jalado hacia arriba con `margin-top: calc(-1 * var(--spacing-96))` para entrar en el espacio del arco
-- Requiere barrel `index.ts` en su carpeta para resolución por Rollup
+**Advice** — tarjeta IA con borde gradiente
 
-**Advice** — tarjeta de consejo IA:
-- Borde gradiente AI usando `::before` + `mask-composite: exclude` (1px, `--radius-xl`)
-- Fila superior: `Icon` en 40px + `SectionHeader level="p1"` (title + body)
-- `backgroundImage?: string` — URL de imagen opcional en el fondo (padding-box)
-- Padding top `--spacing-64`, lados `--spacing-12`, bottom `--spacing-16`
+**Shift** + **ShiftPill** — bloque de turno con pills de tips/reviews
 
-**Shift** — bloque de turno:
-- `pills?: ShiftPillProps[]` (0, 1 o 2) en el centro
-- `day?: string` — día mostrado inline con `startTime` entre corchetes, ej. `[Sun] 18:00`
-- `barFill?: number` (0–100, default 100) — porcentaje de relleno de la barra sunday
-- Layout: `barra | pills | times` (de izquierda a derecha, space-between)
-- **Barra** (leftmost, 3px × 32px, `--radius-full`): track gris (`--color-stroke-divider`) con fill sunday (`--color-content-sunday`) que crece desde abajo — track con `overflow: hidden` + fill `position: absolute; bottom: 0`
-- `startTime` + `endTime` a la derecha (body-xs medium secondary, right-aligned)
+**PerformanceWidgetSquare** — widget cuadrado 160px
 
-**ShiftPill** — pill de turno individual:
-- `variant`: `'tips'` | `'reviews'` · `value: number`
-- Tips: fondo `--color-bg-success`, muestra `$value.00` · Reviews: fondo `--color-bg-info`, muestra `value ★`
-- `--radius-md`, padding `--spacing-8 --spacing-12`
+**ValueDot** — indicador métrico con contador animado y partículas
 
-**PerformanceWidgetSquare** — widget métrico cuadrado 160px de alto:
-- `iconName` (IconName, 16px, variant default) + `label` (body-xs medium uppercase secondary) con gap 4px
-- `value` (heading-m, primary) con margin-top 16px
-- `description?` (body-xs regular primary, clamped 2 líneas) anclada al fondo via flex spacer
-- Padding: 12px vertical, 16px horizontal · `--color-bg-secondary` · `--radius-xl`
-- Se usa siempre en grid 2 columnas con gap 8px
-
-**ValueDot** — indicador de métrica compacto con contador animado:
-- Props: `label` · `value: number` · `unit?` (default `%`) · `variant`
-- `variant`: `sunday` (`--color-content-sunday`) | `non-sunday` (`--color-content-secondary`)
-- Usa `currentColor` internamente — variant cambia todos los elementos
-- Al montar: contador animado de 0 → value con easeOutCubic (1000ms)
-- **Soporte de decimales:** si `value % 1 !== 0` usa `parseFloat(raw.toFixed(1))` en el RAF y `.toFixed(1)` en el render (ej. 22.5 → "22.5%", no "23%")
-- Al acabar la animación en variant `sunday`: explosión de partículas desde el centro del número
-- Para partículas: medir posición real con `getBoundingClientRect()` relativo al wrapper
-- `display`: `single` (solo sunday) | `comparison` (sunday + non-sunday lado a lado, 50% cada uno)
-
-**Input** — campo de texto con floating label:
-- Props: extiende `HTMLInputAttributes` · `placeholder?` (actúa como floating label)
-- Default: borde `--color-stroke-default`, fondo transparente
-- Focus: borde `--color-stroke-focus`, fondo `--color-bg-button-secondary`
-- Floating label: en reposo centrado verticalmente (body-m, disabled), en focus/con valor sube a top-8px (body-xs, primary/secondary)
-- Truco CSS: input tiene `placeholder=" "` (espacio); `:not(:placeholder-shown)` mantiene el label arriba cuando hay valor
-- `forwardRef` para compatibilidad con formularios
+**Input** — campo de texto con floating label (`placeholder=" "` + `:not(:placeholder-shown)`)
 
 ---
 
 ### Componentes de prototipo (`prototype-components/`)
 Viven en `design-system/src/prototype-components/` — **no se exportan** desde `src/index.ts`.
-En el explorer aparecen bajo la sección **Prototype**.
 
 - **PushNotification** — `appName`, `appIcon` (ReactNode), `time`, `title`, `body`, `onClick`
-- **OSTopBar** — `color` (default `var(--color-content-primary)`); muestra hora "9:41" a la izquierda y batería/wifi/señal a la derecha con SVGs `fill="currentColor"`. Se integra automáticamente en `Header`.
+- **OSTopBar** — `color` (default `var(--color-content-primary)`). Se integra automáticamente en `Header`. Usar directamente para superponer sobre imágenes hero en pantallas sin Header.
 - **Icon** — `name` (IconName), `size` (default 24), `color` (default currentColor)
+- **Background** — decoración SVG de fondo. `width`, `height`, `className`, `style`. Usar con `position: absolute; top: 0; z-index: 0` para el fondo de pantallas principales.
 
 ### Iconos (`icons/`)
 SVGs en `design-system/icons/*.svg`. Se descubren automáticamente vía `import.meta.glob`.
-- Explorer (Assets > Icons): grid con preview, buscador, click para copiar nombre
 - En prototipos: `<Icon name="arrow-right" size={20} />`
 - Los SVGs deben usar `currentColor` en fill/stroke
 
@@ -308,9 +271,6 @@ SVGs en `design-system/icons/*.svg`. Se descubren automáticamente vía `import.
 Toda página de componente en el explorer **debe usar el componente `Playground`** (`explorer/src/components/Playground/`):
 - Canvas blanco centrado donde vive la preview del componente
 - Barra de controles encima con `select` y/o `toggle` para todas las props relevantes
-- Nunca una página custom con su propio layout de controles
-
-Si el componente necesita un contenedor especial en la preview (e.g. frame de móvil para componentes `fixed`), ese contenedor va **dentro** del canvas del Playground, no fuera.
 
 Para añadir una página al explorer:
 1. Crear `explorer/src/pages/MiPagina.tsx` + `.module.css`
@@ -327,8 +287,6 @@ type ControlDef =
 ---
 
 ### Técnica de borde con gradiente (Advice / AI border)
-Para bordes con gradiente + border-radius no usar `border` (no soporta gradientes). Usar `::before` con `mask-composite`:
-
 ```css
 .component {
   position: relative;
@@ -339,7 +297,7 @@ Para bordes con gradiente + border-radius no usar `border` (no soporta gradiente
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 1px; /* grosor del borde */
+  padding: 1px;
   background: linear-gradient(135deg, #f0968a 0%, #d46ec8 55%, #9b5fe0 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -356,10 +314,21 @@ Para bordes con gradiente + border-radius no usar `border` (no soporta gradiente
 **Importa tokens** de `../../design-system/src/tokens/tokens.css` (path relativo en `main.tsx`)
 **Importa componentes** via `@mi-org/design-system` (dependencia `file:../design-system`)
 
+**Vite config crítica** (`prototypes/vite.config.ts`) — aliases para que Vite resuelva el DS desde source (no desde dist/):
+```ts
+resolve: {
+  alias: {
+    '@mi-org/design-system/tokens.css': resolve(__dirname, '../design-system/src/tokens/tokens.css'),
+    '@mi-org/design-system': resolve(__dirname, '../design-system/src/index.ts'),
+  },
+}
+```
+El orden importa — el alias más específico (`/tokens.css`) debe ir primero.
+
 ### Arrancar
 ```bash
 cd prototypes
-npm run dev   # → http://localhost:5173
+npm run dev   # → http://localhost:5174
 ```
 
 ### Estructura src/
@@ -369,21 +338,90 @@ src/
 ├── global.css            # @font-face (HelveticaNeueLTStd-Roman.otf) + reset
 ├── prototypes.ts         # Array PROTOTYPES con todos los entries
 ├── pages/
-│   ├── Index.tsx         # Página distribuidora (lista de prototipos)
+│   ├── Index.tsx         # Página distribuidora (lista de prototipos + link al DS Explorer)
 │   └── Index.module.css
 ├── components/
 │   ├── MobileShell/      # Silueta iPhone + panel info derecho
 │   └── BranchControl/    # Segmented control vertical para branches/flujos
 └── flows/
-    └── onboarding/       # Primer prototipo: Splash → Login → Home
+    ├── onboarding/       # Prototipo: Splash → Login → Home
+    ├── homepage/         # Prototipo: Homepage
+    ├── end-of-service/   # Prototipo: End of service (flujo completo)
+    └── microgoals/       # Prototipo: Microgoals — quests y recompensas para camareros
+```
+
+### Assets públicos de prototipos
+Las imágenes de cada prototipo que se referencian como rutas públicas (`/assets/...`) van en:
+```
+prototypes/public/assets/{prototipo}/
+```
+(NO en `design-system/assets/` — eso es para assets importados en el DS, no para imágenes de prototipos.)
+
+Ejemplo: `prototypes/public/assets/microgoals/mascot.png` → accesible como `/assets/microgoals/mascot.png`
+
+### Flujos existentes
+
+**`end-of-service/`** — Flujo completo de fin de servicio:
+- `PushScreen` — pantalla de bloqueo con notificación push que aparece a los 900ms
+- `SummaryScreen` — pantalla principal con:
+  - Header main (sin gradiente via CSS override)
+  - DatePickerStrip light con días de la semana
+  - Vista de día actual: tareas con Cell checkable + chevron
+  - Vista de día anterior validado: SectionHeader h2 con thumbnail check + "This day was validated" + "It has 4 comments" + botón "See details"
+  - Drawer de comentarios (3 comentarios del equipo + input)
+  - Drawer de selector de versión del prototipo (V0/V1/V2)
+  - Celebración cuando ambas tareas están marcadas: overlay verde con check SVG animado + 110 partículas de confetti → transición a estado validado
+- `ReviewFiguresScreen` — pantalla "Revenues":
+  - SegmentedControl "By tender / By server"
+  - SectionHeader hero "$1.000 / Total" + dos h2 "$800/Sales" y "$200/Tips"
+  - Botón flotante "Validate the figures" → abre drawer con formulario de comentario + "Confirm" (navega back)
+- `LeaveCommentScreen` — pantalla interior de comentario
+
+**`microgoals/`** — Quests y micro-objetivos para camareros (Servers):
+- `MicrogoalsContext.ts` — contexto React con `completed: Set<number>`, `markComplete(id)`, `resetAll()`
+- `index.tsx` — provider del contexto + MobileShell + Routes
+- `screens/MicrogoalsScreen.tsx` — pantalla principal:
+  - Header main con "Reset prototype" (llama `resetAll`)
+  - Background component absoluto al fondo
+  - Arco SVG de progreso 240° (r=200) con `stroke-dashoffset` animado en color `--color-content-sunday`
+  - Mascota PNG (`/assets/microgoals/mascot.png`) detrás del arco (z-index 0), arc SVG encima (z-index 1)
+  - Crop de mascota con `clip-path: inset(5px 0 5px 0)` para eliminar borde blanco del PNG
+  - Lista de 5 quests: tarjetas con icono gris/negro, badge $5 rosa, chevron en todas
+  - Quest completada: check verde, título tachado en negro, badge $5 tachado
+  - Botón flotante "🏆 Emulate a win" → lock screen → push notification → confetti + salto mascota
+  - 420 partículas de confetti en dos capas: burst radial desde centro (120 pcs) + lluvia desde arriba (300 pcs)
+  - Mascota salta con `@keyframes mascotJump` (translateY + scale + rotate, 0.85s)
+- `screens/GuestCheckingScreen.tsx` — pantalla interior Quest 1:
+  - Sin Header DS — imagen hero full-bleed desde arriba (380px)
+  - OSTopBar blanco superpuesto + botón back circular semitransparente con blur
+  - Pill "You'll win $5" en rosa sunday + SectionHeader h1 con descripción corta
+  - Botón "How to present the QR to Guests" (placeholder, sin acción)
+  - Animación de entrada: `slideInRight` 0.28s
+- `screens/WeeklyQuizScreen.tsx` — pantalla interior Quest 4:
+  - Quiz de 3 preguntas con feedback inmediato (verde/rojo) + resultado final
+
+**Patterns aprendidos en Microgoals:**
+- **Pantalla light-theme sobre DS dark**: usar colores hex específicos para el prototipo, ignorar tokens de bg (que son oscuros)
+- **Arco SVG animado**: usar `strokeDasharray={ARC_LENGTH}` + `strokeDashoffset={ARC_LENGTH - progress}` con `transition` en CSS. Mucho más limpio que animar `strokeDasharray`.
+- **Mascota detrás del arc ring**: mascotWrap con `z-index: 0`, arcSvg con `z-index: 1`. El trazo del arco se renderiza encima de la imagen.
+- **Lock screen emulation**: overlay `position: absolute; inset: 0; z-index: 10` con gradiente oscuro, OSTopBar blanco, y PushNotification que desliza con clase CSS aplicada con `setTimeout`.
+- **Shared state entre pantallas**: usar React Context en `index.tsx` del flow, no useState en cada pantalla.
+- **Hero image sin header**: quitar el Header DS y usar `position: relative` en el contenedor de imagen, con OSTopBar + back button superpuestos como `position: absolute`.
+
+**Navigación en prototipos:** usar siempre rutas absolutas para evitar ambigüedad en contextos con `<Routes>` anidadas dentro de MobileShell:
+```tsx
+// ✓ Correcto
+navigate('/end-of-service/review-figures')
+// ✗ Evitar — puede resolver incorrectamente con zoom:0.8 del phone
+navigate('review-figures')
 ```
 
 ### Página distribuidora (Index)
 - Título: **"SFS Prototypes"**, 220px, `font-weight-medium`, `letter-spacing: -0.07em`, color blanco
-- Nav Q2/Q3: chips pill — activa en blanco con texto negro, inactiva en `#1a1a1a`
 - Filtros: selects de Status / Market / For
 - Cards: status badge + nombre en `--type-heading-xxl` Regular
-- Status badges: rosa `#ff7eb3` sobre fondo `#2e1a1a` con borde `#5a2d3a` — igual para los 3 estados
+- Status badges: rosa `#ff7eb3` sobre fondo `#2e1a1a` con borde `#5a2d3a`
+- Tarjeta "Design System Explorer" (tag azul "Tool") que abre https://sunday-pi.vercel.app
 
 ### Añadir un nuevo prototipo
 1. Añadir entry en `src/prototypes.ts`:
@@ -408,73 +446,31 @@ src/
 
 ### MobileShell
 Layout: `80px | 1fr | 280px` (o `120px | 1fr | 280px` si hay branches)
-- **Izquierda:** flecha ← + `BranchControl` opcional (gris oscuro, vertical)
-- **Centro:** silueta iPhone (zoom 0.8) con notch, status bar, screen scrollable, home indicator
-- **Derecha:** panel con nombre, status badge, Notion link, Link to PRD (siempre visible), info text, Reset Prototype (texto centrado)
+- **Centro:** silueta iPhone (`zoom: 0.8`) con notch, screen scrollable (`position: relative; overflow-y: auto`)
 - **Móvil (<480px):** shell desaparece, contenido full screen
 
-Props opcionales para branches:
-```tsx
-<MobileShell
-  prototype={proto}
-  resetPath="/mi-prototipo"
-  branches={['Default', 'After login', 'Error state']}
-  activeBranch={branch}
-  onBranchChange={setBranch}
->
+Pantallas interiores deben usar `position: absolute; inset: 0; display: flex; flex-direction: column` para llenar exactamente el área del teléfono:
+```css
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-primary);
+}
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.bottom {
+  flex-shrink: 0; /* pega el NavBar al fondo */
+}
 ```
 
 ---
 
 ## Reglas de diseño
-
-### Regla 10 — Jerarquía de layout: Section › Bloc › Item
-Toda pantalla de prototipo organiza su contenido en tres niveles anidados:
-
-```
-Section
-  └─ SectionHeader (opcional)      ← category / h3 / etc.
-  └─ Bloc                          ← 16px gap desde header o desde bloc anterior
-       └─ Item                     ← 8px gap entre items del mismo bloc
-       └─ Item
-  └─ Bloc                          ← 16px gap desde el bloc anterior
-       └─ Item
-```
-
-**Reglas de espaciado:**
-- **Entre SectionHeader y primer Bloc:** `var(--spacing-16)` (16px)
-- **Entre Blocs dentro de un Section:** `var(--spacing-16)` (16px)
-- **Entre Items dentro de un Bloc:** `var(--spacing-8)` (8px)
-
-**CSS base:**
-```css
-/* Section: gap 16px gestiona header→bloc y bloc→bloc */
-.section {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: var(--spacing-16);
-}
-
-/* Bloc: gap 8px gestiona item→item */
-.bloc {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: var(--spacing-8);
-}
-
-/* Item: ocupa el ancho completo */
-.item {
-  width: 100%;
-}
-```
-
-Esta regla se aplica dentro de cada Section de pantalla. Las Sections entre sí tienen `var(--spacing-32)` (Regla 9).
-
-Ver documentación visual en el explorer: **Tokens › Layout**.
-
----
 
 ### Regla 1 — Usar siempre el Design System
 Todo lo que se diseñe o desarrolle debe usar tipografía, colores y componentes del DS:
@@ -497,10 +493,7 @@ Todo `margin`, `padding`, `gap` debe ser uno de estos valores (via token CSS):
 | `--spacing-40` | 40px | | `--spacing-120` | 120px |
 | `--spacing-48` | 48px | | | |
 
-No usar valores arbitrarios. Si no cabe en la escala, elegir el más cercano.
-
 ### Regla 3 — Elevación (sombras)
-Usar siempre uno de estos 3 tokens — nunca `box-shadow` con valores personalizados:
 
 | Token | Descripción | Valor |
 |---|---|---|
@@ -510,77 +503,38 @@ Usar siempre uno de estos 3 tokens — nunca `box-shadow` con valores personaliz
 
 ### Regla 4 — Assets por prototipo
 Imágenes en `design-system/assets/{prototipo}/`, iconos SVG en `design-system/icons/`.
-Ambos se descubren automáticamente en el explorer. Subir antes de usar en prototipos.
 
 ### Regla 5 — Composición: usar siempre componentes del DS
-Cuando un componente de UI contiene dentro otro elemento que ya existe como componente en el design system, **debe usar ese componente — nunca reimplementarlo**.
+Nunca reimplementar un elemento que ya existe como componente en el DS.
 
-Ejemplos:
-- Un `ActionSheet` con botones → usar `<Button>`, nunca un `<button>` propio.
-- Un `Modal` con un botón de cierre → usar `<Button variant="tertiary">`, no un `<button>`.
-- Un componente con icono → usar `<IconContainer>`, no un `<span>` ad-hoc.
-
-Esto aplica a todos los entornos: componentes de producción, prototype-components y prototipos.
-
-### Regla 6 — Páginas de componentes en el explorer usan siempre Playground
+### Regla 6 — Páginas del explorer usan siempre Playground
 (Ver sección Playground arriba)
 
 ### Regla 7 — Color de iconos
-Los iconos tienen dos estados base, controlados con la prop `variant` del componente `Icon`:
 
 | Estado | Prop | Color |
 |---|---|---|
 | Default | `variant="default"` | `--color-content-secondary` |
 | Active | `variant="active"` | `--color-content-primary` |
 
-**Excepción:** cuando el icono forma parte de un componente con estado semántico (success, error, warning, info) o sobre un fondo de color (sunday, overlay…), usar `color="var(--color-content-success)"` / `color="var(--color-content-primary-reversed)"` etc. directamente — no `variant`. El `Icon` aplica el color como inline style en su propio `<span>`, por lo que **ninguna regla CSS del componente padre puede sobreescribirlo** — el color siempre debe pasarse explícitamente al Icon.
-
-Nunca usar colores hardcodeados en iconos. Si no se pasa ni `variant` ni `color`, hereda `currentColor` del contenedor.
-
-### Regla 9 — Layout de pantallas en prototipos
-Toda pantalla de prototipo sigue este layout base obligatorio:
-
-- **Márgenes laterales:** `padding: 0 var(--spacing-16)` — siempre 16px a cada lado.
-- **Componentes a ancho completo:** todos los componentes dentro de la pantalla tienen `width: 100%` y se ajustan al ancho disponible (375px − 32px = 343px útiles).
-- **Secciones apiladas en vertical:** el contenido se organiza en secciones (`<section>`) que se apilan en columna con `gap` entre ellas usando tokens de espaciado.
-
-Estructura CSS base de una pantalla:
-```css
-.screen {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  width: 100%;
-  background: /* color o gradiente */;
-  padding: 0 var(--spacing-16);
-  box-sizing: border-box;
-  gap: var(--spacing-24); /* o el espaciado entre secciones que corresponda */
-}
-```
-
-Cada sección dentro de la pantalla:
-```css
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-12); /* o el token que corresponda internamente */
-  width: 100%;
-}
-```
-
-El gap **entre secciones** es siempre `var(--spacing-32)` (32px). El gap **dentro de una sección** (entre sus elementos internos) es libre según el diseño.
-
-Nunca usar márgenes laterales distintos a 16px. Nunca anchos fijos para componentes dentro de la pantalla.
-
----
+Para contextos semánticos usar `color="var(--color-content-success)"` etc. directamente. El color en Icon es inline style — no puede sobreescribirse desde CSS del padre.
 
 ### Regla 8 — NavBar en prototipos
-Siempre que un prototipo tenga navegación entre secciones (tabs), **debe usar el componente `<NavBar>`** de `@mi-org/design-system`. Nunca crear una navegación inferior custom.
+Usar siempre `<NavBar embedded>` de `@mi-org/design-system`. El prop `embedded` es obligatorio dentro de MobileShell.
 
-- Importar `NavBar` y `NavItem` desde `@mi-org/design-system`
-- Definir los `NavItem[]` con `activeIconName` + `defaultIconName` de la librería de iconos
-- Gestionar `activeKey` con `useState` en el componente raíz del prototipo
-- El mercado (US/FR) determina qué items se muestran (ver `NavBarPage.tsx` como referencia)
+### Regla 9 — Layout de pantallas en prototipos
+- Márgenes laterales: `padding: 0 var(--spacing-16)` siempre
+- Gap entre secciones: `var(--spacing-32)`
+
+### Regla 10 — Jerarquía de layout: Section › Bloc › Item
+```
+Section (gap 16px)
+  └─ SectionHeader (opcional)
+  └─ Bloc (gap 8px entre items)
+       └─ Item
+  └─ Bloc
+       └─ Item
+```
 
 ---
 
@@ -588,14 +542,12 @@ Siempre que un prototipo tenga navegación entre secciones (tabs), **debe usar e
 
 - **CSS Modules** en todo. Sin Tailwind, sin styled-components.
 - **Tokens CSS** siempre con variables, nunca hex hardcodeado en el DS.
-- **No JS para tipografía fluida** — usar `max()` / `clamp()` en CSS.
 - Prototipos en fondo negro `#000000`.
-- Los headers del explorer (tokens + componentes) usan `--type-heading-xl` medium + `--type-body-m` para la descripción.
-- Las páginas de componentes usan el componente `Playground` (canvas blanco + controles interactivos).
-- SVGs de iconos siempre con `fill="currentColor"` y `stroke="currentColor"` — nunca `fill="black"` hardcodeado.
-- Para bordes con gradiente + border-radius: usar `::before` + `mask-composite: exclude` (ver técnica documentada arriba).
-- **Partículas con posición correcta:** usar `getBoundingClientRect()` relativo al wrapper para calcular coordenadas — nunca `offsetLeft/offsetTop` en contextos flex ni `top/left: 50%` en spans inline.
-- **Floating label inputs:** usar `placeholder=" "` (espacio) en el input real + label absolutamente posicionado; CSS `:not(:placeholder-shown)` mantiene el label arriba cuando hay valor sin necesidad de JS.
+- SVGs de iconos siempre con `fill="currentColor"` — nunca `fill="black"` hardcodeado.
+- Para bordes con gradiente + border-radius: usar `::before` + `mask-composite: exclude`.
+- **Partículas con posición correcta:** usar `getBoundingClientRect()` relativo al wrapper.
+- **TypeScript falsos positivos en prototipos:** `npx tsc` en prototipos puede dar errores porque resuelve `@mi-org/design-system` a `dist/` (tipos viejos), mientras que Vite usa source. Son falsos positivos — el runtime funciona correctamente. No usar `tsc` como paso de build en prototipos.
+- **Floating label inputs:** usar `placeholder=" "` (espacio) + label absolutamente posicionado; `:not(:placeholder-shown)` mantiene el label arriba.
 
 ---
 
@@ -604,4 +556,7 @@ Siempre que un prototipo tenga navegación entre secciones (tabs), **debe usar e
 - [ ] Confirmar códigos hex exactos de los colores semánticos con Figma (marcados ⚠ en `tokens.css`)
 - [ ] Añadir iconos reales al slot `icon` del componente Alert
 - [ ] Rellenar `notionUrl`, `prdUrl` e `info` en cada prototipo de `prototypes.ts`
-- [ ] Construir los flujos de los 5 prototipos: Email invitation, Manager's challenges, Server's challenges, Homepage, Send rewards to your bank
+- [ ] Construir los flujos restantes: Email invitation, Manager's challenges, Server's challenges, Send rewards to your bank
+- [ ] End-of-service V1 y V2 (actualmente solo V0 — The Green Olive)
+- [ ] Microgoals: definir contenido real de la pantalla interior "Get your first guest checking their bill" (actualmente placeholder)
+- [ ] Microgoals: añadir más quests interactivas (actualmente solo Quest 1 y Quiz tienen pantalla interior)
