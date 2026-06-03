@@ -381,7 +381,7 @@ Ejemplo: `prototypes/public/assets/microgoals/mascot.png` → accesible como `/a
 **`weekend-bets/`** — Social betting game (Servers):
 Juego de apuestas ligero: cada viernes los camareros apuestan a cuál compañero ganará una categoría playful durante el fin de semana (ej. "highest tip %"). Resultados el domingo por la noche + $5 si aciertan.
 
-- `data.ts` — 9 teammates con nombre completo (ej. "Jake Turner"), emoji, color, lista de betters (solo nombres de pila: "Hélène", "Felix"…). `WINNER_ID = 3` (Jake Turner, finalValue 26.3%)
+- `data.ts` — 9 teammates con nombre completo (ej. "Jake Turner"), emoji, color, lista de betters (solo nombres de pila: "Hélène", "Felix"…). `WINNER_ID = 3` (Jake Turner, finalValue 36.3%). Valores base ~24–28%, valores finales ~27–36%.
 - `WeekendBetsContext.ts` — contexto React: `phase` (friday|live|simulating|result), `activeTab` (bet|live|history), funciones reset/placeBet/startSimulation/jumpToSunday
 - `index.tsx` — provider del contexto + MobileShell. `startSimulation` aplica valores finales instantáneamente y pasa a phase `simulating` (sin animación de intervalo)
 - `screens/LockScreen.tsx` — Primera pantalla:
@@ -395,18 +395,16 @@ Juego de apuestas ligero: cada viernes los camareros apuestan a cuál compañero
 - `screens/LiveScreen.tsx` — Standings:
   - Header main "Reset demo" sin gradiente rosa (override `img[aria-hidden="true"] { display: none }`)
   - LIVE badge + SectionHeader h1 poll question + meta Saturday 7:14 PM
-  - **Table header**: Rank / Server / Tip
-  - Standings: filas con Divider DS entre ellas, sin barras, sin emoji avatar
-  - Cada fila: rank | nombre + "Your pick" badge | avatares solapados de betters (max 3 + "+N") | tip %
-  - Helper `nameToColor(name)` para color determinístico de cada avatar
+  - **Podium visual top 3**: 3 tarjetas en fila (2º izquierda · 1º centro más alta · 3º derecha). Gradientes: dorado `#F9EDB5→#EDCC6A` (1º), plateado `#DDE5EF→#BFCEE0` (2º), cobre `#F5DCC0→#DEBB98` (3º). Sin avatar. Número de posición grande y muy sutil en el fondo (`rgba` opacidad ~0.08). Badge "Your pick" si el usuario apostó a alguien del top 3.
+  - **Tabla 4º–9º** debajo: filas con Divider DS, rank | nombre + "Your pick" badge | avatares solapados de betters (max 3 + "+N") | tip %. Helper `nameToColor(name)` para color determinístico.
   - Botón "▶ Simulate weekend" → phase `simulating`
-- `screens/SundayNightScreen.tsx` — Lock screen nocturna (nueva):
+- `screens/SundayNightScreen.tsx` — Lock screen nocturna:
   - Fondo `#080612`, OSTopBar blanco, tiempo 10:47 / Sunday, June 8
   - PushNotification desliza a los 800ms: "🏆 You were right! Take your $5 reward" (siempre, para demo)
-  - Cuerpo: "[Winner] got the highest tip — 26% ($52.00)"
+  - Cuerpo: "[Winner] got the highest tip — 36% ($68.00)"
   - Botón "Jump to Sunday 🌙" → phase `result`
 - `screens/ResultOverlay.tsx` — Resultado:
-  - Win: fondo gradiente púrpura, "You were right! / Enjoy your $5 reward", winner card sin emoji (nombre izquierda, "26.3% tip / $244 tip" derecha en blanco), social proof row centrado (3 avatares + "Hélène, Brett and +12 won their bet!"), 280 partículas confetti
+  - Win: fondo gradiente púrpura, "You were right! / Enjoy your $5 reward", winner card sin emoji (nombre izquierda, "36.3% tip / $244 tip" derecha en blanco), social proof row centrado (3 avatares + "Hélène, Brett and +12 won their bet!"), 280 partículas confetti
   - Lose: fondo `#0d0d12`, "So close!", misma winner card, "New bets drop every Friday" sin fondo
   - Ambos estados: botón "See results" blanco (ancho completo) + "Replay demo" ghost blanco al fondo
 
@@ -421,6 +419,7 @@ Juego de apuestas ligero: cada viernes los camareros apuestan a cuál compañero
 - **Betters con apellidos**: los teammates tienen nombre completo en `name` (ej. "Marcus Lambert"); los `betters[]` son solo nombres de pila (sin apellido)
 - **SundayNightScreen como fase intermedia**: `phase = 'simulating'` → LiveScreen devuelve `<SundayNightScreen />` antes de ResultOverlay. Permite mostrar lock screen nocturna sin nuevas rutas
 - **Resultado siempre "ganador" en notificación**: la PushNotification de SundayNightScreen muestra siempre el mensaje de victoria para un demo más impactante; el win/lose real se diferencia en ResultOverlay
+- **Podium con gradientes pastel sobre fondo oscuro**: las tarjetas del podium usan colores pastel claros (dorado/plateado/cobre) que contrastan bien sobre el fondo blanco de la LiveScreen. Sin avatares — solo nombre + porcentaje + número de posición muy sutil en el fondo. La tarjeta del 1º es más alta (`min-height` mayor). Orden visual: 2º izquierda, 1º centro, 3º derecha.
 
 **`microgoals/`** — Quests y micro-objetivos para camareros (Servers):
 - `MicrogoalsContext.ts` — contexto React con `completed: Set<number>`, `markComplete(id)`, `resetAll()`
