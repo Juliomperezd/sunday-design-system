@@ -1,0 +1,285 @@
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-primary);
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.headerWrap {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  position: relative;
+  z-index: 1;
+}
+.scroll::-webkit-scrollbar { display: none; }
+
+/* ── Poll header ── */
+
+.pollHeader {
+  padding: var(--spacing-16) var(--spacing-16) var(--spacing-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.liveBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: color-mix(in srgb, #FF4757 15%, transparent);
+  color: #FF4757;
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.08em;
+  border-radius: 100px;
+  padding: 4px 10px;
+  align-self: flex-start;
+  font-family: var(--font-family-base);
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FF4757;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+.pollMeta {
+  font-size: var(--type-body-xs-size);
+  color: var(--color-content-secondary);
+  font-family: var(--font-family-base);
+}
+
+/* ── Hot callout ── */
+
+.hotCallout {
+  margin: 0 var(--spacing-16) var(--spacing-8);
+  padding: var(--spacing-12) var(--spacing-16);
+  background: color-mix(in srgb, #FDCB6E 12%, transparent);
+  border: 1px solid color-mix(in srgb, #FDCB6E 40%, transparent);
+  border-radius: 12px;
+  font-size: var(--type-body-s-size);
+  font-weight: var(--font-weight-medium);
+  color: #FDCB6E;
+  font-family: var(--font-family-base);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Standings ── */
+
+.standings {
+  padding: 0 var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-12) var(--spacing-16);
+  background: var(--color-bg-secondary);
+  border: 1.5px solid transparent;
+  border-radius: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.rowHighlight {
+  border-color: color-mix(in srgb, #FDCB6E 60%, transparent);
+  background: color-mix(in srgb, #FDCB6E 5%, var(--color-bg-secondary));
+}
+
+.rowLeader {
+  border-color: color-mix(in srgb, #FDCB6E 80%, transparent);
+  background: color-mix(in srgb, #FDCB6E 8%, var(--color-bg-secondary));
+}
+
+.rank {
+  font-size: 14px;
+  width: 24px;
+  text-align: center;
+  color: var(--color-content-secondary);
+  font-family: var(--font-family-base);
+  flex-shrink: 0;
+}
+
+.rowAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  color: #1a1a2e;
+  flex-shrink: 0;
+  font-family: var(--font-family-base);
+}
+
+.rowMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rowNameRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.rowName {
+  font-size: var(--type-body-s-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+}
+
+.yourPick {
+  font-size: 10px;
+  font-weight: var(--font-weight-medium);
+  color: #FDCB6E;
+  background: color-mix(in srgb, #FDCB6E 15%, transparent);
+  border-radius: 100px;
+  padding: 2px 7px;
+  font-family: var(--font-family-base);
+}
+
+.leadingBadge {
+  font-size: 10px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-success);
+  background: color-mix(in srgb, var(--color-content-success) 15%, transparent);
+  border-radius: 100px;
+  padding: 2px 7px;
+  font-family: var(--font-family-base);
+}
+
+.barTrack {
+  height: 4px;
+  background: var(--color-stroke-divider);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.rowValue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.pct {
+  font-size: 17px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.pctLeader {
+  color: #FDCB6E;
+}
+
+.pctLabel {
+  font-size: 10px;
+  color: var(--color-content-secondary);
+  font-family: var(--font-family-base);
+}
+
+/* ── Value moment ── */
+
+.valueMoment {
+  margin: var(--spacing-16) var(--spacing-16) 0;
+  padding: var(--spacing-16);
+  background: color-mix(in srgb, var(--color-content-success) 8%, var(--color-bg-secondary));
+  border: 1px solid color-mix(in srgb, var(--color-content-success) 30%, transparent);
+  border-radius: 16px;
+  display: flex;
+  gap: var(--spacing-12);
+  align-items: center;
+  animation: slideDown 0.4s ease;
+}
+
+.valueMomentAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  color: #1a1a2e;
+  flex-shrink: 0;
+  font-family: var(--font-family-base);
+}
+
+.valueMomentTitle {
+  font-size: var(--type-body-s-size);
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+  line-height: var(--type-body-s-lh);
+}
+
+.valueMomentSub {
+  font-size: var(--type-body-xs-size);
+  color: var(--color-content-secondary);
+  margin-top: 3px;
+  font-family: var(--font-family-base);
+}
+
+/* ── Actions ── */
+
+.actions {
+  flex-shrink: 0;
+  padding: var(--spacing-12) var(--spacing-16) var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  position: relative;
+  z-index: 1;
+}
+
+.actions > * {
+  width: 100%;
+}

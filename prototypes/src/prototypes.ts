@@ -21,6 +21,20 @@ export interface PrototypeEntry {
 // Añade aquí cada nuevo prototipo para que aparezca en el índice
 export const PROTOTYPES: PrototypeEntry[] = [
   {
+    key: 'weekend-bets',
+    name: 'Weekend Bets',
+    description: "Light social betting game: servers bet on who'll win a fun category each weekend and collect $5 if they called it right.",
+    path: '/weekend-bets',
+    screens: 4,
+    quarter: 'Q2·2026',
+    status: 'Discovery',
+    market: ['Francia', 'US'],
+    for: ['Servers'],
+    notionUrl: '',
+    prdUrl: '',
+    info: '',
+  },
+  {
     key: 'microgoals',
     name: 'Microgoals',
     description: 'Quests y micro-objetivos para incentivar el aprendizaje y adopción de Sunday por parte de los camareros.',

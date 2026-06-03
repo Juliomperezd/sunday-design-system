@@ -1,0 +1,161 @@
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-primary);
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.headerWrap {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  position: relative;
+  z-index: 1;
+}
+.scroll::-webkit-scrollbar { display: none; }
+
+.section {
+  padding: var(--spacing-24) var(--spacing-16) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+/* ── History cards ── */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.card {
+  background: var(--color-bg-secondary);
+  border-radius: 16px;
+  padding: var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-8);
+}
+
+.resultBadge {
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  border-radius: 100px;
+  padding: 4px 10px;
+  font-family: var(--font-family-base);
+}
+
+.won {
+  background: color-mix(in srgb, #FDCB6E 15%, transparent);
+  color: #FDCB6E;
+}
+
+.lost {
+  background: var(--color-bg-primary);
+  color: var(--color-content-secondary);
+}
+
+.week {
+  font-size: var(--type-body-xs-size);
+  color: var(--color-content-secondary);
+  font-family: var(--font-family-base);
+}
+
+.poll {
+  font-size: var(--type-body-m-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-primary);
+  line-height: var(--type-body-m-lh);
+  font-family: var(--font-family-base);
+}
+
+.cardBottom {
+  display: flex;
+  gap: var(--spacing-24);
+  padding-top: var(--spacing-8);
+  border-top: 1px solid var(--color-stroke-divider);
+}
+
+.cardDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.detailLabel {
+  font-size: 11px;
+  color: var(--color-content-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: var(--font-family-base);
+}
+
+.detailValue {
+  font-size: var(--type-body-s-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+}
+
+.pickRight {
+  color: #FDCB6E;
+}
+
+.pickWrong {
+  color: var(--color-content-secondary);
+}
+
+/* ── Upcoming card ── */
+
+.upcomingCard {
+  background: var(--color-bg-secondary);
+  border: 1.5px dashed var(--color-stroke-divider);
+  border-radius: 16px;
+  padding: var(--spacing-16);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+.upcomingEmoji {
+  font-size: 28px;
+}
+
+.upcomingTitle {
+  font-size: var(--type-body-m-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+}
+
+.upcomingNote {
+  font-size: var(--type-body-xs-size);
+  color: var(--color-content-secondary);
+  margin-top: 3px;
+  font-family: var(--font-family-base);
+}
