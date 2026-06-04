@@ -389,7 +389,7 @@ Juego de apuestas ligero: cada viernes los camareros apuestan a cuál compañero
   - Al tapear: el wallpaper desaparece revelando LiveScreen detrás; el drawer sube encima con scrim oscuro
   - **Drawer** (fondo `#000`): 🪙 + pregunta centrada en blanco + "Results drop Sunday night 🌙"
   - 9 tarjetas: fondo `rgba(255,255,255,0.07)` + border-radius 12px, selector circular gris → blanco con ✓ al seleccionar, no-seleccionados bajan a opacity 0.4
-  - Betters: "Hélène, Felix +2 placed their bet" (nombres de pila únicamente)
+  - Betters: avatares solapados (max 3 + "+N") con colores determinísticos via `nameToColor` + texto "placed their bet". Mismo patrón que los standings de LiveScreen.
   - Botón "Place Bet" blanco (`#ffffff`) forzado con `!important`
   - Confetti burst 28 pcs al confirmar → transición a LiveScreen vía context
 - `screens/LiveScreen.tsx` — Standings:
