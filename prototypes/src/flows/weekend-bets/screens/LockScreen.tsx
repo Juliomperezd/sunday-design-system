@@ -8,6 +8,13 @@ import styles from './LockScreen.module.css';
 
 const CONFETTI_COLORS = ['#FDCB6E','#FF7675','#A29BFE','#55EFC4','#FD79A8','#74B9FF','#6C5CE7','#00CEC9'];
 
+const AVATAR_COLORS = ['#E84393','#00CEC9','#FDCB6E','#A29BFE','#6C5CE7','#FD79A8','#00B894','#E17055','#0984E3'];
+function nameToColor(name: string): string {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % AVATAR_COLORS.length;
+  return AVATAR_COLORS[h];
+}
+
 interface Particle { id: number; x: number; y: number; tx: number; ty: number; color: string; rot: number; dur: number; delay: number; }
 let pid = 0;
 
@@ -85,11 +92,26 @@ export function LockScreen() {
                   >
                     <div className={styles.teamInfo}>
                       <p className={styles.teamName}>{t.name}</p>
-                      <p className={styles.teamOdds}>
-                        <span className={styles.bettersNames}>{names}</span>
-                        {extra > 0 && <span className={styles.bettersCount}> +{extra}</span>}
-                        <span className={styles.bettersLabel}> placed their bet</span>
-                      </p>
+                      <div className={styles.teamOdds}>
+                        <div className={styles.bettersAvatars}>
+                          {t.betters.slice(0, 3).map((name, i) => (
+                            <div
+                              key={i}
+                              className={styles.betterAvatar}
+                              style={{ background: nameToColor(name), zIndex: t.betters.slice(0, 3).length - i }}
+                              title={name}
+                            >
+                              {name[0].toUpperCase()}
+                            </div>
+                          ))}
+                          {extra > 0 && (
+                            <div className={[styles.betterAvatar, styles.betterAvatarMore].join(' ')} style={{ zIndex: 0 }}>
+                              +{extra}
+                            </div>
+                          )}
+                        </div>
+                        <span className={styles.bettersLabel}>placed their bet</span>
+                      </div>
                     </div>
                     <div className={[styles.selector, isSelected ? styles.selectorActive : ''].join(' ')}>
                       {isSelected && '✓'}
