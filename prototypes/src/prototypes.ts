@@ -21,6 +21,20 @@ export interface PrototypeEntry {
 // Añade aquí cada nuevo prototipo para que aparezca en el índice
 export const PROTOTYPES: PrototypeEntry[] = [
   {
+    key: 'surprise-pack',
+    name: 'Surprise Pack',
+    description: 'Servers receive a mystery pack notification and choose one of 5 sealed packs to reveal a new work challenge and reward.',
+    path: '/surprise-pack',
+    screens: 2,
+    quarter: 'Q3·2026',
+    status: 'Discovery',
+    market: ['Francia', 'US'],
+    for: ['Servers'],
+    notionUrl: '',
+    prdUrl: '',
+    info: '',
+  },
+  {
     key: 'weekend-bets',
     name: 'Weekend Bets',
     description: "Light social betting game: servers bet on who'll win a fun category each weekend and collect $5 if they called it right.",

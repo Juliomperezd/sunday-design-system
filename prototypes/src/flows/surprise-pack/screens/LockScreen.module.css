@@ -1,0 +1,66 @@
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(160deg, #1a1035 0%, #2d1b69 40%, #1e1040 70%, #0d0820 100%);
+  overflow: hidden;
+}
+
+.timeBlock {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: var(--spacing-56);
+}
+
+.time {
+  font-size: 80px;
+  font-weight: 200;
+  color: #ffffff;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-family: var(--font-family-base);
+}
+
+.date {
+  font-size: var(--type-body-m-size);
+  line-height: var(--type-body-m-lh);
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: var(--spacing-8);
+  font-family: var(--font-family-base);
+}
+
+.notifWrap {
+  padding: 0 var(--spacing-16);
+  opacity: 0;
+  transform: translateY(-16px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  margin-bottom: var(--spacing-32);
+}
+
+.notifIn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: var(--spacing-48);
+  gap: var(--spacing-8);
+}
+
+.lockIcon {
+  font-size: 22px;
+  opacity: 0.6;
+}
+
+.swipeHint {
+  font-size: var(--type-body-s-size);
+  line-height: var(--type-body-s-lh);
+  color: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-family-base);
+}

@@ -1,0 +1,427 @@
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: #000000;
+  overflow: hidden;
+}
+
+/* ── Dark nav header ── */
+
+.navRow {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-8) var(--spacing-16);
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.backBtn {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.backBtn:active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.navTitle {
+  flex: 1;
+  text-align: center;
+  font-size: var(--type-heading-m-size);
+  line-height: var(--type-heading-m-lh);
+  font-weight: var(--font-weight-medium);
+  color: #ffffff;
+  font-family: var(--font-family-base);
+  margin: 0;
+}
+
+.navSpacer {
+  width: 36px;
+  flex-shrink: 0;
+}
+
+/* ── Pack area ── */
+
+.packArea {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.spotlight {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 95% 75% at 50% 50%,
+    rgba(255, 61, 139, 0.24) 0%,
+    rgba(200, 40, 110, 0.1) 50%,
+    transparent 75%
+  );
+  pointer-events: none;
+}
+
+/* ── Horizontal scroll ── */
+
+.packsScroll {
+  display: flex;
+  gap: var(--spacing-16);
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  width: 100%;
+  padding: var(--spacing-16) 88px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.packsScroll::-webkit-scrollbar { display: none; }
+
+/* ── Pack card — TCG booster style ── */
+
+.pack {
+  /* Tall TCG booster proportions */
+  width: 195px;
+  height: 370px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  position: relative;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: center;
+
+  /* Metallic rose base — multiple gradient layers */
+  background:
+    /* Specular diagonal flash */
+    linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.42) 0%,
+      rgba(255, 255, 255, 0.0) 22%,
+      rgba(0, 0, 0, 0.06) 42%,
+      rgba(255, 255, 255, 0.14) 65%,
+      rgba(255, 255, 255, 0.0) 100%
+    ),
+    /* Base rose metallic */
+    linear-gradient(
+      148deg,
+      #ff6aaa 0%,
+      #e8156a 28%,
+      #a8004a 55%,
+      #d4006a 78%,
+      #ff3d8b 100%
+    );
+
+  box-shadow:
+    0 24px 70px rgba(255, 61, 139, 0.45),
+    0 8px 24px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.28s ease;
+}
+
+.pack:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+/* ── Top crimp seal ── */
+
+.crimpTop {
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 14px 14px 0 0;
+  /* Horizontal crimp lines simulating heat-sealed foil */
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.0)   0px,
+    rgba(255, 255, 255, 0.0)   3px,
+    rgba(255, 255, 255, 0.18)  3px,
+    rgba(255, 255, 255, 0.18)  4.5px,
+    rgba(0, 0, 0, 0.1)         4.5px,
+    rgba(0, 0, 0, 0.1)         5.5px,
+    rgba(255, 255, 255, 0.0)   5.5px,
+    rgba(255, 255, 255, 0.0)   9px
+  );
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.35);
+  position: relative;
+}
+
+/* Tear notch on right side */
+.crimpTop::after {
+  content: '';
+  position: absolute;
+  right: 18px;
+  bottom: -5px;
+  width: 9px;
+  height: 9px;
+  background: #000;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* ── Main art body ── */
+
+.packBody {
+  flex: 1;
+  padding: var(--spacing-8) var(--spacing-12);
+  display: flex;
+}
+
+.artWindow {
+  flex: 1;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  background: rgba(0, 0, 0, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Radial glow inside art window */
+.artGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 75% 55% at 50% 38%,
+    rgba(255, 120, 170, 0.22) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.gemSvg {
+  width: 68px;
+  height: 85px;
+  position: relative;
+  z-index: 1;
+  animation: gemPulse 3.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(255, 180, 210, 0.5));
+}
+
+@keyframes gemPulse {
+  0%, 100% { opacity: 0.75; transform: scale(1); filter: drop-shadow(0 0 6px rgba(255, 180, 210, 0.4)); }
+  50%       { opacity: 1;    transform: scale(1.06); filter: drop-shadow(0 0 12px rgba(255, 180, 210, 0.75)); }
+}
+
+/* ── Bottom crimp seal ── */
+
+.crimpBottom {
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 0 0 14px 14px;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.0)  0px,
+    rgba(255, 255, 255, 0.0)  2px,
+    rgba(255, 255, 255, 0.14) 2px,
+    rgba(255, 255, 255, 0.14) 3.5px,
+    rgba(0, 0, 0, 0.08)       3.5px,
+    rgba(0, 0, 0, 0.08)       4.5px,
+    rgba(255, 255, 255, 0.0)  4.5px,
+    rgba(255, 255, 255, 0.0)  8px
+  );
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* ── Chrome metallic sheen (static diagonal) ── */
+
+.packChrome {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  /* Additional chrome diagonal highlight */
+  background: linear-gradient(
+    112deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.12) 44%,
+    rgba(255, 255, 255, 0.22) 48%,
+    rgba(255, 255, 255, 0.08) 52%,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+/* ── Holographic iridescent overlay ── */
+
+.packHolo {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    calc(var(--angle, 118) * 1deg),
+    transparent 8%,
+    rgba(255, 40,  40,  0.6) 16%,
+    rgba(255, 165, 0,   0.55) 22%,
+    rgba(50,  220, 50,  0.5)  28%,
+    rgba(0,   170, 255, 0.55) 34%,
+    rgba(90,  0,   255, 0.55) 40%,
+    rgba(230, 0,   255, 0.5)  46%,
+    rgba(255, 80,  170, 0.45) 52%,
+    rgba(255, 255, 255, 0.2)  58%,
+    transparent 68%
+  );
+  opacity: var(--shine-opacity, 0.18);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+  transform:
+    translateX(calc((var(--px, 0.5) - 0.5) * 80px))
+    translateY(calc((var(--py, 0.5) - 0.5) * 50px));
+  will-change: transform, opacity;
+}
+
+/* ── Edge reflections ── */
+
+.edgeLeft {
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+  border-radius: 14px 0 0 14px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.65) 20%,
+    rgba(255, 255, 255, 0.5)  50%,
+    rgba(255, 255, 255, 0.28) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.edgeRight {
+  position: absolute;
+  top: 0; right: 0;
+  width: 2px;
+  height: 100%;
+  border-radius: 0 14px 14px 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.35) 30%,
+    rgba(0, 0, 0, 0.25) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Pack states ── */
+
+@keyframes packShake {
+  0%   { transform: scale(1.02) rotate(0deg); }
+  12%  { transform: scale(1.06) rotate(-4.5deg); }
+  25%  { transform: scale(1.08) rotate(5deg); }
+  38%  { transform: scale(1.08) rotate(-4deg); }
+  50%  { transform: scale(1.07) rotate(3.5deg); }
+  63%  { transform: scale(1.06) rotate(-2deg); }
+  76%  { transform: scale(1.05) rotate(1deg); opacity: 0.8; }
+  88%  { transform: scale(1.06) rotate(0deg); opacity: 0.4; }
+  100% { transform: scale(1.16) rotate(0deg); opacity: 0; }
+}
+
+.packOpening {
+  animation: packShake 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  box-shadow:
+    0 36px 100px rgba(255, 61, 139, 0.65),
+    0 12px 32px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+.packDimmed {
+  opacity: 0.18;
+  transform: scale(0.91);
+}
+
+/* ── Confetti ── */
+
+@keyframes confettiBurst {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)); opacity: 0; }
+}
+
+.particle {
+  position: absolute;
+  border-radius: 2px;
+  pointer-events: none;
+  animation: confettiBurst var(--dur) ease-out var(--delay) both;
+  z-index: 20;
+}
+
+.particleCircle {
+  border-radius: 50%;
+}
+
+/* ── Challenge dialog ── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.84); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.62);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  padding: var(--spacing-24);
+  animation: fadeIn 0.22s ease;
+}
+
+.dialog {
+  background: var(--color-bg-primary);
+  border-radius: 24px;
+  padding: var(--spacing-32) var(--spacing-24) var(--spacing-24);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-16);
+  animation: scaleIn 0.38s cubic-bezier(0.34, 1.18, 0.64, 1);
+}
+
+.dialogEmoji {
+  font-size: 52px;
+  line-height: 1;
+}
+
+.challengeDesc {
+  font-size: var(--type-body-m-size);
+  line-height: var(--type-body-m-lh);
+  color: var(--color-content-secondary);
+  text-align: center;
+  font-family: var(--font-family-base);
+  margin: 0;
+}
+
+.dialogActions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
